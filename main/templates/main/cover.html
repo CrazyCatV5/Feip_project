@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'main/css/main.css'%}">
+</head>
+<header>
+    <h2>Головняк</h2>
+</header>
+<body>
+    
+    {% block content %}
+    {% endblock %}
+    <aside>
+        <img src="{%static 'main/images/test1.jpg'%}" alt="">
+    </aside>
+
+</body>
+<footer>
+    <h2>ножник</h2>
+</footer>
+</html>
