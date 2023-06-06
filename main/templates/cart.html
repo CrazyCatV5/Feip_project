@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+<div class="Cart">
+  <div class="Cart__header">
+    <!-- Вернуться в каталог -->
+    <h1 class="Cart__title">
+      КОРЗИНА
+    </h1>
+  </div>
+  <div class="Cart__container">
+    <ul class="Cart__itemList">
+      {% include 'components/cart-item.html' %}
+      <hr class="Cart__separator">
+      {% include 'components/cart-item.html' %}
+      <hr class="Cart__separator">
+      {% include 'components/cart-item.html' %}
+      <hr class="Cart__separator">
+      {% include 'components/cart-item.html' %}
+    </ul>
+    <div class="Cart__total">
+      {% with mode='cart' %}
+        {% include 'components/cart-total.html' %}
+      {% endwith %}
+    </div>
+  </div>
+</div>
+{% endblock %} 

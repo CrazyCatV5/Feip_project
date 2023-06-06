@@ -1,0 +1,131 @@
+{% set scope = {
+    'preview': '/static/images/image_placeholder.png',
+    'gallery': {
+      'galleryItems': [
+          {
+            'image': '/static/images/image_placeholder.png',
+          },
+          {
+            'image': '/static/images/image_placeholder.png',
+          },
+          {
+            'image': '/static/images/image_placeholder.png',
+          },
+          {
+            'image': '/static/images/image_placeholder.png',
+          },
+          {
+            'image': '/static/images/image_placeholder.png',
+          },
+          {
+            'image': '/static/images/image_placeholder.png',
+          },
+          {
+            'image': '/static/images/image_placeholder.png',
+          },
+      ],
+    },
+    'color': 'Белый',
+    'title': 'Жакет Weekend Max Mara ONDINA',
+    'id': '4022995L',
+    'description': 'Жакет с поясом<br>
+    - Длинный двубортный плащ с поясом; Кокетка на спине<br>
+    - Застёжка на 3 ряда пуговиц; 2 внешних кармана; Регулируемые паты на рукавах; сзади высокая встречная складка; Длина: 123,6 см',
+    'material': 'Основная ткань: 100% Полиэстер; Пояс: 100% Полиэстер;<br>
+    Подкл: 100% Полиэстер',
+    'multSizes': 'true',
+    'sizes': [
+      {
+        'name': 'XS',
+      },
+      {
+        'name': 'S',
+      },
+      {
+        'name': 'M',
+      },
+      {
+        'name': 'L',
+      },
+      {
+        'name': 'XL',
+      },
+    ],
+    'colors': [
+      {
+        'name': 'Белый',
+        'color': '#FFFFFF',
+        'url': '/',
+      },
+      {
+        'name': 'Светло-серый',
+        'color': '#CDCFD6',
+        'url': '/',
+      },
+      {
+        'name': 'Тёмно-серый',
+        'color': '#616575',
+        'url': '/',
+      },
+      {
+        'name': 'Чёрный',
+        'color': '#323540',
+        'url': '/',
+      },
+    ],
+    'priceString': '6 000 ₽',
+    'WALink': '/',
+    'mode': '',
+} %}
+
+{% set x=scope.__setitem__("mode", mode) %}
+
+
+{% macro content(scope) %}
+<div class="CartTotal">
+  <div class="CartTotal__info"> 
+    <div class="CartTotal__title">
+      Ваша корзина
+    </div>
+    <hr class="CartTotal__separator">
+    <div class="CartTotal__row">
+      <div class="CartTotal__rowName">
+        Кол-во товаров:
+      </div>
+      <div class="CartTotal__rowValue">
+        4 шт
+      </div>
+    </div>
+    <div class="CartTotal__row">
+      <div class="CartTotal__rowName">
+        Сумма:
+      </div>
+      <div class="CartTotal__rowValue">
+        24 000 ₽ 
+      </div>
+    </div>
+    <hr class="CartTotal__separator">
+    <div class="CartTotal__row">
+      <div class="CartTotal__total">
+        Итого
+      </div>
+      <div class="CartTotal__total">
+        24 000 ₽
+      </div>
+    </div>
+  </div>
+  {% if scope.mode == 'cart' %}
+  <a class="CartTotal__link" href="/checkout">
+    <button class="Form__button Button">
+      ОФОРМИТЬ ЗАКАЗ
+    </button>
+  </a>
+  {% elif scope.mode == 'checkout' %}
+  <input class="Button Form__button" type="submit" id="submit" name="submit" value="ОТПРАВИТЬ ЗАЯВКУ">
+  {% endif %}
+</div>
+{% from 'components/modals/size-picker-modal.html' import sizePickerModal %}
+{{ sizePickerModal(scope) }}
+{% endmacro %}
+
+{{ content(scope) }}

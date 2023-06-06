@@ -1,0 +1,114 @@
+.Product {
+  font-family: 'PT Sans', sans-serif;
+  display: flex;
+  flex-flow: row;
+
+  &__info {
+    padding: 0px 45px;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: $color-darkergray;
+  }
+
+  &__id {
+    display: flex;
+    flex-flow: row;
+    padding-top: 8px;
+  }
+
+  &__idSign {
+    font-size: 14px;
+    font-weight: 500;
+    color: $color-sign-gray;
+  }
+
+  &__idValue {
+    font-size: 14px;
+    font-weight: 400;
+    color: $color-darkgray;
+    padding-left: 8px;
+  }
+
+  &__section {
+    padding-top: 24px;
+  }
+
+  &__sectionTitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: $color-darkergray;
+    padding-bottom: 8px;
+  }
+
+  &__text {
+    font-size: 16px;
+    font-weight: 400;
+    color: $color-darkgray;
+  }
+
+  &__link {
+    font-weight: 700;
+  }
+
+  &__sizeMenu {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    gap: 27px;
+  }
+
+  &__buyMenu {
+    padding-top: 56px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__price {
+    font-size: 24px;
+    font-weight: 700;
+    color: $color-darkergray;
+  }
+}
+
+.ColorMenu {
+  display: flex;
+  margin-top: 4px;
+
+  &__item {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: block;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+
+    &--selected {
+      border: 2px solid #616575;
+    }
+      
+    &:not(:last-child) {
+        margin-right: 16px;
+    }
+  }
+}
+
+.Gallery {
+  display: flex;
+  flex-flow: row;
+
+  &__list {
+    width: 180px;
+  }
+
+  &__display {
+    height: auto;
+    width: 464px;
+    padding-left: 28px;
+  }
+}

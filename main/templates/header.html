@@ -1,0 +1,259 @@
+{% set scope = {
+  'siteNav': {
+    'vertical': false,
+    'siteNavItems': [
+        {
+            'url': '/',
+            'name': 'О нас',
+        },
+        {
+            'url': '/',
+            'name': 'Как заказать',
+        },
+        {
+            'url': '/',
+            'name': 'Декларации',
+        },
+        {
+            'url': '/',
+            'name': 'Отзывы',
+        },
+        {
+            'url': '/',
+            'name': 'Контакты',
+        },
+        {
+            'url': '/',
+            'name': 'Outlet',
+        },
+    ],
+  },
+  'socials': {
+    'socialsItems': [
+        {
+            'url': '/',
+            'name': 'Телеграм',
+            'icon': '/static/images/Telegram_icon.svg',
+        },
+        {
+            'url': '/',
+            'name': 'YouTube',
+            'icon': '/static/images/YT_icon.svg',
+        },
+        {
+            'url': '/',
+            'name': 'Вконтакте',
+            'icon': '/static/images/VK_icon.svg',
+        },
+    ],
+  },
+  'contact': {
+    'url': '/',
+    'name': 'Позвонить нам',
+    'icon': '/static/images/WA_icon.svg',
+  },
+  'logo': {
+    'url': '/',
+    'name': 'logo',
+    'image': '/static/images/logo.svg',
+  },
+  'userMenu': {
+    'favourites': {
+      'url': '/',
+      'name': 'Избранное',
+      'icon': '/static/images/favourites_icon.svg',
+    },
+    'login': {
+      'url': '/',
+      'name': 'Вход/Регистрация',
+      'icon': '/static/images/user_icon.svg',
+    },
+    'cart': {
+      'url': '/cart',
+      'name': 'Корзина',
+      'icon': '/static/images/cart_icon.svg',
+    },
+  },
+  'catalog': {
+    'icon': '/static/images/catalog_icon.svg',
+    'catalogItems': [
+      {
+        'url': '/catalog',
+        'name': 'Одежда',
+      },
+      {
+        'url': '/catalog',
+        'name': 'Обувь',
+      },
+      {
+        'url': '/catalog',
+        'name': 'Верхняя одежда',
+      },
+      {
+        'url': '/catalog',
+        'name': 'Домашняя одежда',
+      },
+      {
+        'url': '/catalog',
+        'name': 'Купальники',
+      },
+      {
+        'url': '/catalog',
+        'name': 'Аксессуары',
+      },
+      {
+        'url': '/catalog',
+        'name': 'Идеи для подарков',
+      },
+      {
+        'url': '/catalog',
+        'name': 'Marina rinaldi',
+      },
+    ],
+  },
+} %}
+
+{% macro siteNav(scope) %}
+<div class="SiteNav {{'SiteNav--vertical' if scope.vertical }}">
+  {% for item in scope.siteNavItems %}
+    {% set item = {
+      'url': item.url or '',
+      'name': item.name or '',
+    } %}
+    <li class="SiteNav__listItem {{ 'SiteNav__listItem--vertical' if scope.vertical }}">
+      <a href="{{ item.url }}" class="SiteNav__item">
+        {{ item.name }}
+      </a>
+    </li>
+  {% endfor %}
+</div>
+{% endmacro %} 
+
+{% macro socials(scope) %}
+<div class="Socials">
+  {% for item in scope.socialsItems %}
+    {% set item = {
+      'url': item.url or '',
+      'name': item.name or '',
+      'icon': item.icon or '',
+    } %}
+    <li class="Socials__listItem">
+      <a href="{{ item.url }}" class="Socials__item">
+        <img class="Socials__icon" src="{{ item.icon }}" alt="{{ item.name }}">
+      </a>
+    </li>
+  {% endfor %}
+</div>
+{% endmacro %} 
+
+{% macro contact(scope) %}
+<div class="Contact {{'SiteNav--vertical' if scope.vertical }}">
+    {% set scope = {
+      'url': scope.url or '',
+      'name': scope.name or '',
+      'icon': scope.icon or '',
+    } %}
+      <a href="{{ scope.url }}" class="Contact__link">
+        <img class="Contact__icon" src="{{ scope.icon }}" alt="{{ scope.name }}">
+        <div class="Contact__text ">
+          {{ scope.name }}
+        </div>
+      </a>
+</div>
+{% endmacro %} 
+
+{% macro userMenu(scope) %}
+<div class="UserMenu">
+  <li class="UserMenu__listItem">
+    <a class="UserMenu__item" href="{{ scope.favourites.url }}">
+      <img class="UserMenu__icon" src="{{ scope.favourites.icon }}" alt="{{ scope.favourites.name }}">
+      <div class="UserMenu__text ">
+        {{ scope.favourites.name }}
+      </div>
+    </a>
+  </li>
+  <li class="UserMenu__listItem">
+    <a class="UserMenu__item" data-bs-toggle="modal" data-bs-target="#loginModal">
+      <img class="UserMenu__icon" src="{{ scope.login.icon }}" alt="{{ scope.login.name }}">
+      <div class="UserMenu__text ">
+        {{ scope.login.name }}
+      </div>
+    </a>
+  </li>
+  <li class="UserMenu__listItem">
+    <a class="UserMenu__item" href="{{ scope.cart.url }}">
+      <img class="UserMenu__icon" src="{{ scope.cart.icon }}" alt="{{ scope.cart.name }}">
+      <div class="UserMenu__text">
+        {{ scope.cart.name }}
+      </div>
+    </a>
+  </li>
+  {% include 'components/modals/login-modal.html' %}
+</div>
+{% endmacro %} 
+
+{% macro catalog(scope) %}
+<div class="NavCatalog">
+  <div class="dropdown">
+    <a class="Button NavCatalog__button" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <img class="NavCatalog__icon" src="{{ scope.icon }}">
+      <div class="NavCatalog__title">
+        КАТАЛОГ
+      </div>
+    </a>
+    <!-- <div class="dropdown-menu NavCatalog__dropdownArea" aria-labelledby="navbarDropdown">  
+      <ul class="NavCatalog__list">      
+        {% for item in scope.catalogItems %}
+          {% set item = {
+            'url': item.url or '',
+            'name': item.name or '',
+          } %}
+          <li class="NavCatalog__listItem">
+            <a href="{{ item.url }}" class="NavCatalog__item">
+              {{ item.name }}
+            </a>
+          </li>
+        {% endfor %}
+        </ul>
+    </div> -->
+  </div>
+</div>
+{% endmacro %} 
+
+{% macro searchBar(scope) %}
+<div class="SearchBar">
+  <input class="form-control me-2 SearchBar__input" type="search" placeholder="" aria-label="Search">
+</div>
+{% endmacro %} 
+
+{% macro content(scope) %}
+<div class="Header">
+  <div class="HeaderUpper">
+    <div class="HeaderUpper__menu">
+      {{ siteNav(scope.siteNav) }}
+      {{ socials(scope.socials) }}
+      {{ contact(scope.contact) }}
+    </div>
+  </div>
+  <div class="HeaderLower">
+    <a href="{{ scope.logo.url }}" class="HeaderLower__logo">
+      <img
+        class="HeaderLower__logoImage"
+        src="{{ scope.logo.image }}"
+        alt="{{ scope.logo.name }}"
+      >
+    </a>
+    <div class="HeaderLower__catalog">
+      {{ catalog(scope.catalog) }}
+    </div>
+    <div class="HeaderLower__searchBar">
+      {{ searchBar() }}
+    </div>
+    <div class="HeaderLower__userMenu">
+      {{ userMenu(scope.userMenu) }}
+    </div>
+  </div>
+</div>
+{% endmacro %} 
+
+{{ content(scope) }}

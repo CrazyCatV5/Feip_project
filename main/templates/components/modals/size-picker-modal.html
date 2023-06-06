@@ -1,0 +1,33 @@
+
+{% macro sizePickerModal(scope) %}
+  <div class="modal" id="sizePickerModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content Modal">
+        <form method="POST" action="{{ url_for('login') }}">
+          <!--  csrf_field()  -->
+          <div class="Modal">
+            <button type="button" class="btn-close Modal__closeButton" data-bs-dismiss="modal" aria-label="Close">
+              <img
+              class="Modal__closeButtonImage"
+              src="static/images/close_icon.svg"
+              alt="Закрыть"
+            >
+          </button>
+            <div class="Modal__header">
+              Выберите размер:
+            </div>
+            
+            <select class="form-select Modal__select" name="sizes">
+              <option value="" selected disabled hidden></option>
+              {% for item in scope %}
+                <option value="{{ item.id }}">{{ item.size }}</option>
+              {% endfor %}     
+            </select>
+            
+            <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="В корзину">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endmacro %}

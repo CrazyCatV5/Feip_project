@@ -43,7 +43,17 @@ INSTALLED_APPS = [
     'main',
     'colorfield',
     'rest_framework',
-    'django_filters'
+    'django_filters',
+    'compressor'
+]
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+
+COMPRESS_PRECOMPILERS = [
+    ('text/x-scss', 'django_libsass.SassCompiler'),
 ]
 
 MIDDLEWARE = [
@@ -59,6 +69,14 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'logo.urls'
 
 TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.jinja2.Jinja2',
+        'DIRS': [os.path.join(BASE_DIR, 'main/templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'environment': 'main.views.environment',
+        }, 
+    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
@@ -129,6 +147,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Add these new lines
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, '/main/static'),
+)
+
+STATIC_ROOT = STATICFILES_DIRS
+
+COMPRESS_ROOT = STATIC_URL
 MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'
 REST_FRAMEWORK = {

@@ -1,0 +1,61 @@
+.ProductCard {
+  width: 288px + 32px;
+  height: 488px + 32px;
+  display: flex;
+  flex-flow: column;
+  line-height: 121%;
+  // position: relative;
+  overflow: visible;
+
+  &__wrapper {
+    background-color: rgba(0, 0, 0, 0);
+    position: absolute;
+    z-index: 1;
+    width: 288px + 32px;
+    height: 488px + 32px;
+    padding: 16px;
+    // transform: translate(-16px, -16px);
+    overflow: hidden;
+    transition: 100ms ease-in-out;
+    text-decoration: none;
+    &:hover {
+      background-color: $color-white;
+      z-index: 2;
+      width: 288px + 32px;
+      height: 488px + 72px + 32px;
+      box-shadow: 0px 0px 20px -4px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  &__image {
+    width: 288px;
+    height: 407px;
+    margin-bottom: 16px;
+  }
+
+  &__title {
+    color: $color-sign-gray;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    text-decoration: underline;
+  }
+
+  &__price {
+    color: $color-sign-gray;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 32px;
+  }
+
+  &__button {
+    display: none;
+    height: 40px;
+    width: 100%;
+    :hover > & {
+      display: block;
+    }
+  }
+}

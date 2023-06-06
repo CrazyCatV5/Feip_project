@@ -1,0 +1,189 @@
+.Cart {
+  font-family: 'PT Sans', sans-serif;
+  display: flex;
+  flex-flow: column;
+  width: 1248px;
+
+  &__header {
+    display: flex;
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 500;
+    color: $color-darkergray;
+    margin: 0px;
+  }
+
+  &__container {
+    background-color: $color-lightergray;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+  }
+
+  &__itemList {
+    display: flex;
+    flex-direction: column;
+    margin-right: 98px;
+    margin-bottom: 0px;
+    padding: 0px;
+  }
+
+  &__total {
+    width: 207px;
+  }
+
+  &__separator {
+    color: $color-lightgray;
+    opacity: 1;
+    margin: 0px;
+  }
+
+  &__form {
+    margin: 40px 48px 80px 0px;
+  }
+}
+
+.CartItem {
+  display: flex;
+  flex-direction: row;
+  width: 593px;
+  margin: 40px 0px;
+
+  &__imageBlock {
+    margin-right: 32px;
+  }
+
+  &__image {
+    width: 145px;
+    height: 145px;
+    object-fit: cover;
+  }
+
+  &__mainBlock {
+    width: 400px;
+    padding: 10px 0px;
+  }
+
+  &__closeButton {
+    background-color: transparent;
+    border: none;
+    width: 24px;
+    height: 24px;
+    margin-left: 16px;
+    margin-top: 11px;
+  }
+
+  &__closeButtonImage {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+
+  &__title {
+    margin-bottom: 8px;
+    color: $color-darkergray;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 121%;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
+    margin-bottom: 24px;
+  }
+
+  &__infoItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin: 0px;
+
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+
+  &__infoName {
+    color: $color-darkgray;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 121%;
+  }
+
+  &__infoValue {
+    margin: 0px;
+    color: $color-darkergray;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 121%;
+  }
+
+  &__price {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0px;
+  }
+}
+
+.CartTotal {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+
+  &__info {
+    background-color: white;
+    border: 1px solid $color-lightgray;
+    padding: 24px 16px;
+  }
+  
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-sign-gray;
+    margin: 0px;
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 121%;
+
+    &:not(:last-child) {
+      margin-bottom: 7px;
+    }
+  }
+  
+  &__rowName {
+    color: $color-darkgray;
+    margin: 0px;
+  }
+  
+  &__rowValue {
+    color: $color-darkergray;
+    margin: 0px;
+  }
+  
+  &__total {
+    font-size: 14px;
+    font-weight: 700;
+    color: $color-sign-gray;
+    line-height: 121%;
+    margin-top: 8px;
+  }
+
+  &__separator {
+    color: $color-lightgray;
+    opacity: 1;
+  }
+}

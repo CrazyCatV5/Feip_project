@@ -1,0 +1,51 @@
+.ProductList {
+  font-family: 'PT Sans', sans-serif;
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+
+  &__grid {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 288px + 32px);
+    gap: 40px 0px;
+    // gap: 72px 32px;
+    margin-top: 47px;
+  }
+}
+
+.Pagination {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  align-self: center;
+  padding: 0px;
+  margin-top: 96px;
+
+  &__item {
+
+    &:not(:last-child){
+      margin-right: 16px;
+    }
+  }
+
+  &__link {
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-color: $color-white;
+    border: 1px solid rgba($color-lightgray, 0.6);
+    color: $color-gray;
+    text-decoration: underline;
+    text-align: center;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+
+    &--current {
+      background-color: $color-lightergray;
+      border: none;
+      color: $color-darkergray;
+    }
+  }
+}

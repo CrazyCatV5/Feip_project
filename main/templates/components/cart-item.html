@@ -1,0 +1,61 @@
+{% set scope = {
+    'preview': '/static/images/image_placeholder_white.png',
+    'color': 'Белый',
+    'title': 'Жакет Weekend Max Mara ONDINA',
+    'multSizes': 'true',
+    'size': 'M',
+    'priceString': '6 000 ₽',
+} %}
+
+
+{% macro content(scope) %}
+<div class="CartItem">
+  <div class="CartItem__imageBlock">
+    <img class="CartItem__image" src="{{ scope.preview }}" alt="{{ scope.title }}">
+  </div>
+  <div class="CartItem__mainBlock">
+    <div class="CartItem__title">
+      {{ scope.title }}
+    </div>
+    <div class="CartItem__info">
+      {% if scope.multSizes %}
+      <div class="CartItem__infoItem">
+        <div class="CartItem__infoName">
+          Размер:
+        </div>
+        <div class="CartItem__infoValue">
+          {{ scope.size }}
+        </div>
+      </div>
+      {% endif %}
+      <div class="CartItem__infoItem">
+        <div class="CartItem__infoName">
+          Цвет:
+        </div>
+        <div class="CartItem__infoValue">
+          {{ scope.color }}
+        </div>
+      </div>
+    </div>
+    <div class="CartItem__price">
+      <div class="CartItem__infoName">
+        Стоимость
+      </div>
+      <div class="CartItem__infoValue">
+        {{ scope.priceString }}
+      </div>
+    </div>
+  </div>
+  <button type="button" class="CartItem__closeButton">
+    <img
+      class="CartItem__closeButtonImage"
+      src="static/images/close_icon_dark.svg"
+      alt="Закрыть"
+    >
+  </button>
+</div>
+{% from 'components/modals/size-picker-modal.html' import sizePickerModal %}
+{{ sizePickerModal(scope) }}
+{% endmacro %}
+
+{{ content(scope) }}

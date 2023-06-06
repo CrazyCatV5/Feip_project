@@ -14,17 +14,43 @@ from main.pagination import StandardResultsSetPagination
 from main.serializers import ProductSerializer, BrandSerializer, SizeSerializer, ColorSerializer, \
     ProductColorSerializer, CategorySerializer, UserSerializer, RegisterSerializer, FavoriteSerializer, BasketSerializer
 from rest_framework import viewsets
+from jinja2 import Environment
+from django.contrib.staticfiles.storage import staticfiles_storage
+from django.urls import reverse
+from compressor.contrib.jinja2ext import CompressorExtension
+import requests
 
+def environment(**options):
+    env = Environment(**options, extensions=[CompressorExtension])
+    env.globals.update({
+       'static': staticfiles_storage.url,
+       'url_for': reverse,
+    })
+    return env
 
 # Create your views here.
 
 
 def main(request):
-    return render(request, 'main/main.html')
+    context = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
+    return render(request, 'catalog.html', {'context': context})
 
+def product(request):
+    productInfo = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
+    WALink = "/"
+    context = {
+        'product': productInfo,
+        'WALink': WALink,
+    }
+    return render(request, 'product.html', {'context': context})
 
-def about(request):
-    return render(request, 'main/about.html')
+def cart(request):
+    context = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
+    return render(request, 'cart.html', {'context': context})
+
+def checkout(request):
+    context = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
+    return render(request, 'checkout.html', {'context': context})
 
 
 class ProductAPI(APIView):

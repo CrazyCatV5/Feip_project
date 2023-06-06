@@ -1,0 +1,65 @@
+<!-- { % set scope = {
+  "id": 1,
+  "name": "штаны0",
+  "article": "штаны0",
+  "cost": 5696.0,
+  "sale_cost": 5469.0,
+  "new": false,
+  "sale": false,
+  "description": "lHvCiO6hVN1t9pcXofF5FOtnZiHVgyyWUol9mT00uMRjuURQUP",
+  "image_color": [
+      {
+          "id": 1,
+          "img_name": "штаны0",
+          "color": {
+              "id": 1,
+              "name": "красный",
+              "color": 4278190080,
+          },
+          "image": "http://127.0.0.1:8000/media/products/seed/1.png",
+          "name": "изображение0",
+          "product": 1,
+      }
+  ],
+  "size": [
+      {
+          "id": 2,
+          "size": 50,
+      }
+  ],
+  "brand": {
+      "id": 4,
+      "name": "rYZHPzcVi3",
+  },
+  "category": {
+      "id": 1,
+      "category": "штаны",
+  },
+  "is_favorite": false,
+} % } -->
+
+
+{% macro content(scope) %}
+<div class="ProductCard">
+  <div class="ProductCard__wrapper">
+    <a class="ProductCard__link" href="/product">
+      {% set image = scope.image_color[0] %}
+      <img class="ProductCard__image" src="{{ image.image }}" alt="{{ image.name }}" width="288">
+      <div class="ProductCard__title">
+        {{ scope.name }}
+      </div>
+      <div class="ProductCard__price">
+        {{ scope.cost }}
+      </div>
+    </a>
+    <button class="ProductCard__button Button" data-bs-toggle="modal" data-bs-target="#sizePickerModal">
+      В КОРЗИНУ
+    </button>
+    
+  </div>
+</div>
+{% from 'components/modals/size-picker-modal.html' import sizePickerModal %}
+{{ sizePickerModal(scope.size) }}
+{% endmacro %}
+
+{{ content(scope) }}

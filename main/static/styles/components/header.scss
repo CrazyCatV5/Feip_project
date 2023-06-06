@@ -1,0 +1,229 @@
+.HeaderUpper {
+  background-color: $color-darkgray;
+  padding: 12px 96px;
+
+  &__menu {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.SiteNav {
+  display: flex;
+  list-style: none;
+      
+  &--vertical {
+    flex-flow: column;
+  }
+  
+  &__listItem {
+    color: $color-white;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 12px;
+    line-height: 1.25;
+    
+    &:not(:last-child) {
+        margin-right: 24px;
+    }
+    
+    &--vertical {
+      width: auto;
+      
+      &:not(:last-child) {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}
+
+.Socials {
+  display: flex;
+  list-style: none;
+  margin-left: auto;
+      
+  &__listItem {
+    color: $color-white;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 12px;
+    line-height: 1.25;
+    
+    &:not(:last-child) {
+      margin-right: 18px;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.Contact {
+  margin-left: 18px;
+      
+  &__link {
+    display: flex;
+    list-style: none;
+    flex-flow: row;
+    align-items: center;
+    color: $color-white;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 12px;
+  }
+      
+  &__text {
+    margin-left: 4px;
+    line-height: 1.25;
+  }
+
+  &__icon {
+      width: 12px;
+      height: 12px;
+  }
+}
+
+.HeaderLower {
+  display: flex;
+  align-items: center;
+  background-color: $color-white;
+  padding: 24px 96px;
+  border-bottom: 1.5px solid $color-lightgray;
+      
+  &__logo {
+    padding: 0px 14px;
+    height: 46px;
+  }
+      
+  &__logoImage {
+    width: 66px;
+    height: 46px;
+  }
+      
+  &__leftMenu {
+    display: flex;
+    align-items: center;
+    justify-self: start;
+    width: 100%;
+  }
+      
+  &__userMenu {
+    margin-left: auto;
+    justify-self: end;
+  }
+}
+
+.UserMenu {
+  display: flex;
+  list-style: none;
+      
+  &__listItem {
+    color: $color-darkergray;
+    font-size: 14px;
+    font-family: 'PT Sans', sans-serif;
+    
+    &:not(:last-child) {
+      margin-right: 24px;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    line-height: 1.2;
+    cursor: pointer;
+  }
+      
+  &__text {
+    margin-left: 8px;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.NavCatalog {
+  font-family: 'PT Sans', sans-serif;
+  margin-left: 38px;
+
+  &__button {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 0px 24px;
+    height: 48px;
+  }
+
+  &__icon {
+    display: block;
+    height: 11px;
+  }
+      
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 121%;
+    margin-left: 8px;
+  }
+      
+  &__dropdownArea {
+    padding: 0px;
+  }
+      
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+  }
+      
+  &__listItem {
+    height: 30px;
+
+    &:hover{
+      background-color: $color-lightergray;
+    }
+  }
+      
+  &__item {
+    display: block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 121%;
+    padding: 6px 24px;
+    width: 100%;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+}
+
+.SearchBar {
+  &__input {
+    background-color: $color-lightergray;
+    border: none;
+    width: 472px; 
+    height: 48px;
+    margin-top: auto;
+  }
+}
+
+
+.OffCanvas {
+  &__content {
+    display: flex;
+    flex-flow: column;
+    padding: 105px 21px 54px;
+    background-color: $color-darkblue;
+  }
+
+  &__logoutButton {
+    margin-top: auto;
+  }
+}

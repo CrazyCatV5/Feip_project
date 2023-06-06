@@ -1,0 +1,34 @@
+{% import _self as macros %}
+
+{% set scope = {
+    items: items ?? {},
+    vertical: vertical ?? false,
+} %}
+
+{% macro content(scope) %}
+    <ul class="SiteNav {{ scope.vertical ? "SiteNav--vertical" }}">
+        {% for item in scope.items %}
+            {% set item = {
+                url: item.url ?? '',
+                name: item.name ?? '',
+            } %}
+            
+            <li class="SiteNav__listItem {{ scope.vertical ? "SiteNav__listItem--vertical" }}">
+                <a href="{{ item.url }}" class="SiteNav__item LinkWhite">
+                    {{ item.name }}
+                </a>
+            </li>
+        {% endfor %}
+        {% if (scope.vertical) %}
+            <li class="SiteNav__listItem SiteNav__listItem--vertical SiteNav__divider"></li>
+            <li class="SiteNav__listItem SiteNav__listItem--vertical">
+                <a href="" class="SiteNav__item LinkWhite">Личный кабинет</a>
+            </li>
+            <li class="SiteNav__listItem SiteNav__listItem--vertical">
+                <a href="" class="SiteNav__item LinkWhite">Оповещения</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endmacro %}
+
+{{ content(scope) }}

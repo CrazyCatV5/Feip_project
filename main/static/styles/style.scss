@@ -1,0 +1,86 @@
+//Variables
+$color-black: black;
+$color-white: white;
+$color-lightergray: #F7F7FC;
+$color-border-gray: #ADB1BB;
+$color-lightgray: #CDCFD6;
+$color-gray: #9CA0AB;
+$color-hint-gray: #828282;
+$color-darkgray: #616575;
+$color-sign-gray: #515562;
+$color-darkergray: #323540;
+$color-darkblue: #3b63ab;
+$color-lightblue: #6995d0;
+
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Functions
+@function toRem($size) {
+  @return $size/16px * 1rem;
+}
+
+// Mixins
+@mixin vw-xsm-up {
+  @media (min-width: 501px) {
+      @content;
+  }
+}
+@mixin vw-xsm-down {
+  @media (max-width: 500px) {
+      @content;
+  }
+}
+
+@mixin vw-sm-up {
+  @media (min-width: 781px) {
+      @content;
+  }
+}
+@mixin vw-sm-down {
+  @media (max-width: 780px) {
+      @content;
+  }
+}
+
+@mixin vw-lg-up {
+  @media (min-width: 1265px) {
+      @content;
+  }
+}
+@mixin vw-lg-down {
+  @media (max-width: 1264px) {
+      @content;
+  }
+}
+
+@import "./layout.scss";
+
+//Elements
+@import "./elements.scss";
+
+//Components
+@import "components/header.scss";
+@import "components/product.scss";
+@import "components/catalog.scss";
+@import "components/cart.scss";
+@import "components/product-list.scss";
+@import "components/product-card.scss";
+
+:root {
+  --bs-border-radius: 0%;
+  --bs-border-color: $color-lightgray;
+}
+.modal {
+  --bs-modal-width: 384px;
+  --bs-modal-border-width: 1px;
+  --bs-modal-border-radius: 0px;
+  --bs-modal-border-color: #E8E5E2;
+}
+.btn-close {
+  --bs-btn-close-color: $color-sign-gray;
+  --bs-btn-close-opacity: 0.2;
+  --bs-btn-close-bg: none;
+  box-sizing: border-box;
+}

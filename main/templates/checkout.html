@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+<div class="Cart">
+  <div class="Cart__header">
+    <!-- Вернуться в каталог -->
+    <h1 class="Cart__title">
+      КОРЗИНА
+    </h1>
+  </div>
+  <form method="POST" action="{{ url_for('login') }}">
+    <!--  csrf_field()  -->
+    <div class="Cart__container">
+      <div class="Form Cart__form" id="checkout">
+        <div class="Form__contactsGroup">
+          <div class="Form__column">
+            <label class="Form__label" for="name">Имя</label>
+            <input class="Form__field" type="text" id="name" name="name">
+          </div>
+          <div class="Form__column">
+            <label class="Form__label" for="email">E-mail</label>
+            <input class="Form__field" type="text" id="email" name="email">
+          </div>
+        </div>
+        <label class="Form__label" for="sizes">Способ получения</label>
+        <select class="form-select Form__select" name="sizes">
+          <option value="" selected disabled hidden></option>
+          <option value="Самовывоз" selected>Самовывоз</option>
+          <option value="Доставка">Доставка</option>
+        </select>
+        <div class="Form__addressGroup">
+          <div class="Form__row">
+            <div class="Form__column">
+              <label class="Form__label" for="city">Населённый пункт</label>
+              <input class="Form__field" type="text" id="city" name="city">
+            </div>
+            <div class="Form__column">
+              <label class="Form__label" for="postcode">Почтовый индекс</label>
+              <input class="Form__field" type="text" id="postcode" name="postcode">
+            </div>
+          </div>
+          <div class="Form__column">
+            <label class="Form__label" for="street">Улица</label>
+            <input class="Form__field" type="text" id="street" name="street">
+          </div>
+          <div class="Form__row">
+            <div class="Form__column">
+              <label class="Form__label" for="building">Дом</label>
+              <input class="Form__field" type="text" id="building" name="building">
+            </div>
+            <div class="Form__column">
+              <label class="Form__label" for="flat">Квартира/Офис</label>
+              <input class="Form__field" type="text" id="flat" name="flat">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="Cart__total">
+        {% with mode='checkout' %}
+          {% include 'components/cart-total.html' %}
+        {% endwith %}
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %} 
