@@ -1,19 +1,17 @@
 import os
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'logo.settings')
-
 import django
-
+os.environ["DJANGO_SETTINGS_MODULE"] = "logo.settings"
 django.setup()
-
+from django.contrib.auth.models import User
 import random
 from django.utils.crypto import get_random_string
-from logo.settings import DATABASE_PATH
-from main.models import Product, ProductColor, Color, Size, Brand, Category
+from main.models import Product, ProductColor, Color, Size, Brand, Category, MainCategory, Contact
 from django.db import connection
+
 with connection.cursor() as cursor:
     cursor.execute("DROP SCHEMA public CASCADE;")
     cursor.execute("CREATE SCHEMA public;")
+
 
 def main():
     os.system('python manage.py makemigrations')
@@ -24,12 +22,26 @@ def main():
     Category.objects.all().delete()
     Size.objects.all().delete()
     Brand.objects.all().delete()
-    for i in range(10):
-        size = Size(size=i * 5 + 45)
+    MainCategory.objects.all().delete()
+    for i in range(3):
+        name = ['остальное', 'одежда', "аксессуары"]
+        main_category = MainCategory(main_category=name[i])
+        main_category.save()
+    sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
+    for i in range(7):
+        size = Size(size=sizes[i])
         size.save()
     for i in range(4):
         name = ['штаны', "куртки", "ботинки", "шляпы"]
-        category = Category(category=name[i])
+        main_category = MainCategory.objects.all()
+
+        if i == 0 or i == 1:
+            category = Category(category=name[i], main_category=main_category[1])
+        elif i == 3:
+            category = Category(category=name[i], main_category=main_category[2])
+        else:
+            category = Category(category=name[i])
+
         category.save()
     for i in range(5):
         name = ['красный', "черный", "синий", "желтый", "зеленый"]
@@ -66,16 +78,31 @@ def main():
             product.article = ('шляпа' + str(i))
             product.category = (category[3])
         product.color.add(color[random.randrange(0, 2)], through_defaults={'name': "изображение" + str(i),
-                                                               'image': 'products/seed/' + str(
+                                                                           'image': 'products/seed/' + str(
                                                                                i + 1) + '.png'})
-        product.size.add(size[random.randrange(1, 9)])
+        product.size.add(size[random.randrange(1, 7)])
         product.save()
 
     product = Product.objects.all()
     for i in range(99):
-        pc = ProductColor(image='products/seed/' + str(i + 3) + '.png', name="изображение" + str(i)+ str(i),
-                          product=product[i+1], color=color[random.randrange(2, 4)])
+        pc = ProductColor(image='products/seed/' + str(i + 3) + '.png', name="изображение" + str(i) + str(i),
+                          product=product[i + 1], color=color[random.randrange(2, 4)])
         pc.save()
+
+    for i in range(7):
+        name = ['телефон', 'email', "telegram", "instagram", "vk", "youtube", "whatsapp"]
+        data = ['+7(900)900-90-90', "admin@admin.admin"]
+        if i < 2:
+            contact = Contact(name=name[i], data=data[i])
+        else:
+            contact = Contact(name=name[i], data=name[i], image='contacts_and_media/mono/' + name[i] + '.png')
+        contact.save()
+    user = User.objects.create(username='root', email='root@root.root', first_name='root', last_name='root')
+    user.set_password('root')
+    user.save()
+    user = User.objects.create(username='admin', email='admin@admin.admin', first_name='admin', last_name='admin', is_superuser=True, is_staff=True)
+    user.set_password('admin')
+    user.save()
 
 
 if __name__ == '__main__':

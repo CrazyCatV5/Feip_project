@@ -21,7 +21,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 router = routers.DefaultRouter()
-router.register(r'product', ProductViewSet)
 router.register(r'brand', BrandViewSet)
 router.register(r'size', SizeViewSet)
 router.register(r'color', ColorViewSet)
@@ -30,8 +29,13 @@ router.register(r'category', CategoryViewSet)
 router.register(r'user', UserViewSet)
 router.register(r'favorite', FavoriteViewSet)
 router.register(r'user_favorite', FavoriteProductViewSet)
-router.register(r'basket', BasketViewSet)
+router.register(r'product', ProductViewSet)
 router.register(r'my_basket', MyBasketViewSet)
+router.register(r'basket', BasketViewSet)
+router.register(r'order', OrderViewSet)
+router.register(r'order_piece', OrderPieceViewSet)
+router.register(r'main_category', MainCategoryViewSet)
+router.register(r'contact', ContactViewSet)
 
 
 

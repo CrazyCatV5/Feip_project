@@ -6,6 +6,7 @@ services:
     volumes:
       - ./logo:/backend/logo
       - ./main:/backend/main
+      - ./start.py:/backend/start.py
     ports:
       - "8000:8000"
     depends_on:

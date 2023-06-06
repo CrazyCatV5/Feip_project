@@ -3,13 +3,15 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from .models import Product, ProductColor, Size, Color, Brand, Category, ProductUser, Basket
+from .models import Product, ProductColor, Size, Color, Brand, Category, ProductUser, Basket, Order, OrderPiece, \
+    MainCategory, Contact
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ["id", "last_login", "is_superuser", "username", "first_name", "last_name", "email", "is_staff",
+                  "is_active", "date_joined", "groups", "user_permissions"]
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
@@ -19,6 +21,21 @@ class FavoriteSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
+class MainCategorySerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True, many=True)
+
+    class Meta:
+        model = MainCategory
+        fields = ['id', 'main_category', 'category']
+
+
+class CategorySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Category
         fields = '__all__'
@@ -115,10 +132,36 @@ class ProductBasketSerializer(serializers.ModelSerializer):
 
 
 class BasketSerializer(serializers.ModelSerializer):
-    #product = ProductBasketSerializer()
-    #color = ColorSerializer()
-    #size = SizeSerializer()
+    # product = ProductBasketSerializer()
+    # color = ColorSerializer()
+    # size = SizeSerializer()
 
     class Meta:
         model = Basket
+        fields = '__all__'
+
+
+class OrderPieceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderPiece
+        fields = '__all__'
+
+
+class OrderPieceTestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderPiece
+        fields = ['id']
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    order_piece = OrderPieceSerializer(many=True, source='orderpiece_set')
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
         fields = '__all__'
