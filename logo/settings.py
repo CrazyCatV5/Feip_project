@@ -75,6 +75,12 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'environment': 'main.views.environment',
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
         }, 
     },
     {
@@ -160,3 +166,4 @@ MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'
 REST_FRAMEWORK = {
 }
+LOGIN_REDIRECT_URL = '/'

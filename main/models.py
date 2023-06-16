@@ -48,6 +48,8 @@ class Product(models.Model):
     article = models.TextField('Артикул', max_length=20)
     cost = models.FloatField('Цена', )
     sale_cost = models.FloatField('Скидочная_цена', )
+    cost_formatted = models.TextField('Цена (строка)', max_length=20)
+    sale_cost_formatted = models.TextField('Cкидочная_цена (строка)', max_length=20)
     new = models.BooleanField('Новый?', )
     sale = models.BooleanField('Скидка?', )
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)

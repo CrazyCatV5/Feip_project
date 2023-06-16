@@ -54,10 +54,14 @@ def main():
     for i in range(100):
         booll = [True, False]
         cost = random.randrange(1000, 100000)
+        cost_formatted = str(int(cost) // 1000) + " " + str(int(cost) % 1000).zfill(3) + " ₽"
+        sale_cost = cost - cost // 25
+        sale_cost_formatted = str(int(sale_cost) // 1000) + " " + str(int(sale_cost) % 1000).zfill(3) + " ₽"
         brand = Brand.objects.all()
         category = Category.objects.all()
         size = Size.objects.all()
-        product = Product.objects.create(cost=cost, sale_cost=cost - cost // 25,
+        product = Product.objects.create(cost=cost, cost_formatted=cost_formatted, 
+                                         sale_cost=sale_cost, sale_cost_formatted=sale_cost_formatted,
                                          new=random.choice(booll), sale=random.choice(booll),
                                          brand=brand[random.randrange(1, 9)],
                                          description=get_random_string(50))

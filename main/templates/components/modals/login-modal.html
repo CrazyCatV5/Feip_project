@@ -3,45 +3,75 @@
   <div class="modal" id="loginModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <form method="POST" action="{ { url_for('login') } }">
-          <!--  csrf_field()  -->
+        <form id="loginForm" method="POST" action="api/v1/drf-auth/login/">
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
           <div class="Modal" id="loginModal-phoneInput">
-            <button type="button" class="btn-close Modal__closeButton" data-bs-dismiss="modal" aria-label="Close">
+            <button type="button" class="btn-close Modal__closeButton" onclick="switchToLogin()" data-bs-dismiss="modal" aria-label="Close">
               <img
                 class="Modal__closeButtonImage"
-                src="static/images/close_icon.svg"
+                src="{{ static('/images/close_icon.svg') }}"
                 alt="Закрыть"
               >
             </button>
             <div class="Modal__header">
-              Подтвердите номер телефона
+              Вход
             </div>
 
-            <div class="Modal__label">
-              Мы отправим на номер SMS-сообщение с кодом подтверждения
-            </div>
-            <input class="Modal__field" type="text" id="phone_number" name="phone_number">
-            <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ПОЛУЧИТЬ КОД">
+            <label for="username">Имя пользоватля</label>
+            <input class="Modal__field" type="text" id="username" name="username">
+            <label for="username">Пароль</label>
+            <input class="Modal__field" type="text" id="password" name="password">
+            <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ВОЙТИ">
             <div class="Modal__hint">
-              Нажимая на кнопку, вы принимаете пользовательское соглашение и политику конфиденциальности
+              Новый пользователь? <a class="Modal__hintLink" onclick="switchToRegister()">Зарегистрироваться</a>
             </div>            
           </div>
+        </form>
+        <form id="registerForm" method="POST" action="api/v1/drf-auth/register/" hidden>
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
           <div class="Modal" id="loginModal-phoneInput">
+            <button type="button" class="btn-close Modal__closeButton" onclick="switchToLogin()" data-bs-dismiss="modal" aria-label="Close">
+              <img
+                class="Modal__closeButtonImage"
+                src="{{ static('/images/close_icon.svg') }}"
+                alt="Закрыть"
+              >
+            </button>
             <div class="Modal__header">
-              Введите код
+              Регистрация
             </div>
-            <div class="Modal__label">
-              Отправили сообщение на номер
-            </div>
-            <input class="Modal__field" type="password" id="password" name="password">
 
-            <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ПОЛУЧИТЬ ПОВТОРНО">
-            <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ИЗМЕНИТЬ ТЕЛЕФОН">
+            <label for="username">Имя пользоватля</label>
+            <input class="Modal__field" type="text" id="username" name="username">
+            <label for="username">Имя</label>
+            <input class="Modal__field" type="text" id="first_name" name="first_name">
+            <label for="username">Фамилия</label>
+            <input class="Modal__field" type="text" id="last_name" name="last_name">
+            <label for="username">Email</label>
+            <input class="Modal__field" type="text" id="email" name="email">
+            <label for="username">Пароль</label>
+            <input class="Modal__field" type="text" id="password" name="password">
+            <label for="username">Потдвердите пароль</label>
+            <input class="Modal__field" type="text" id="password2" name="password2">
+            <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ">
+            <div class="Modal__hint">
+              Уже зарегистрированы? <a class="Modal__hintLink" onclick="switchToLogin()">Войти</a>
+            </div>            
           </div>
         </form>
       </div>
     </div>
   </div>
+  <script>
+    function switchToRegister() {
+      document.getElementById("registerForm").hidden = false;
+      document.getElementById("loginForm").hidden = true;
+    }
+    function switchToLogin() {
+      document.getElementById("registerForm").hidden = true;
+      document.getElementById("loginForm").hidden = false;
+    }
+  </script>  
 {% endmacro %}
 
 {{ content() }}

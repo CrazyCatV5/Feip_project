@@ -38,18 +38,17 @@
   "is_favorite": false,
 } % } -->
 
-
 {% macro content(scope) %}
 <div class="ProductCard">
   <div class="ProductCard__wrapper">
-    <a class="ProductCard__link" href="/product">
+    <a class="ProductCard__link" href="/product/{{ scope.id }}">
       {% set image = scope.image_color[0] %}
       <img class="ProductCard__image" src="{{ image.image }}" alt="{{ image.name }}" width="288">
       <div class="ProductCard__title">
         {{ scope.name }}
       </div>
       <div class="ProductCard__price">
-        {{ scope.cost }}
+        {{ scope.cost_formatted }}
       </div>
     </a>
     <button class="ProductCard__button Button" data-bs-toggle="modal" data-bs-target="#sizePickerModal">

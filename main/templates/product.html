@@ -1,6 +1,6 @@
 {% extends 'layouts/base.html' %}
 
-{% set scope = {
+<!-- { % set scope = {
   "product": {
     "id": 1,
     "name": "штаны0",
@@ -41,7 +41,8 @@
     "is_favorite": false
   },
   'WALink': '/',
-} %}
+} % } -->
+{% set scope = context %}
 
 {% macro gallery(scope) %}
 <div class="Gallery">
@@ -122,7 +123,7 @@
     </div>
     <div class="Product__buyMenu">
       <div class="Product__price">
-        {{ scope.product.cost }}
+        {{ scope.product.cost_formatted }}
       </div>
       <button type="button" class="Button">В КОРЗИНУ</button>
     </div>

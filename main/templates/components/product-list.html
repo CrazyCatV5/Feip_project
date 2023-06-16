@@ -1,7 +1,7 @@
 {% macro content(scope) %}
 <div class="ProductList">
   <div class="ProductList__grid">
-    {% for item in items %}
+    {% for item in context.products.results %}
       {% with scope=item %}
         {% include 'components/product-card.html' %}
       {% endwith %}
@@ -9,14 +9,19 @@
   </div>
   <ul class="Pagination">
     <!-- <li class="Pagination__item"><a class="Pagination__link" href="#">&laquo;</a></li> -->
-    <li class="Pagination__item"><a class="Pagination__link Pagination__link--current">1</a></li>
-    <li class="Pagination__item"><a class="Pagination__link" href="/">2</a></li>
-    <li class="Pagination__item"><a class="Pagination__link" href="/">3</a></li>
-    <li class="Pagination__item"><a class="Pagination__link" href="/">4</a></li>
-    <li class="Pagination__item"><a class="Pagination__link" href="/">5</a></li>
-    <li class="Pagination__item"><a class="Pagination__link" href="/">6</a></li>
-    <li class="Pagination__item"><a class="Pagination__link" href="/">7</a></li>
-    <li class="Pagination__item"><a class="Pagination__link" href="/">&raquo;</a></li>
+    {% if context.leftArrow %}
+    <li class="Pagination__item"><a class="Pagination__link" href="/1">&laquo;</a></li>
+    {% endif %}
+    {% for i in range(context.leftPages) %}
+    <li class="Pagination__item"><a class="Pagination__link" href="/{{ context.currentPage - context.leftPages + i + 1 }}">{{ context.currentPage - context.leftPages + i }}</a></li>
+    {% endfor %}
+    <li class="Pagination__item"><a class="Pagination__link Pagination__link--current">{{ context.currentPage }}</a></li>
+    {% for i in range(context.rightPages) %}
+    <li class="Pagination__item"><a class="Pagination__link" href="/{{ context.currentPage + i + 1 }}">{{ context.currentPage + i + 1 }}</a></li>
+    {% endfor %}
+    {% if context.rightArrow %}
+    <li class="Pagination__item"><a class="Pagination__link" href="/{{ context.lastPage }}">&raquo;</a></li>
+    {% endif %}
   </ul>
 </div>
 {% endmacro %}

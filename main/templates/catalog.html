@@ -8,7 +8,7 @@
     </h1>
     <!-- фильтры и сортировки -->
   </div>
-  {% with items=context.results %}
+  {% with context=context %}
     {% include 'components/product-list.html' %}
   {% endwith %}
 </div>

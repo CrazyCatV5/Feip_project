@@ -129,7 +129,15 @@ a {
         font-weight: 400;
         color: $color-hint-gray;
         text-align: center;
-        margin-top: 8px;
+    }
+
+    &__hintLink {
+        font-size: 12px;
+        font-weight: 400;
+        color: $color-hint-gray;
+        text-align: center;
+        text-decoration: underline;
+        cursor: pointer;
     }
 
     &__field {

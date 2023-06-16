@@ -1,4 +1,5 @@
 import json
+import math
 
 from django.contrib.auth.models import User
 from django.db.models import Exists, Count, Case, When
@@ -36,15 +37,33 @@ def environment(**options):
 # Create your views here.
 
 
-def main(request):
-    context = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
+def main(request, page):
+    productInfo = requests.get('http://127.0.0.1:8000/api/v1/product/?page=' + str(page)).json()
+    lastPage = math.ceil(productInfo.get('count') / 12)
+    leftPages = min(page - 1, 3)
+    rightPages = min(lastPage - page, 3)
+    leftArrow = False
+    rightArrow = False
+    if (page - 1 > 3):
+        leftArrow = True
+    if (lastPage - page > 3):
+        rightArrow = True
+    context = {
+        'products': productInfo,
+        'currentPage': page,
+        'leftPages': leftPages,
+        'rightPages': rightPages,
+        'leftArrow': leftArrow,
+        'rightArrow': rightArrow,
+        'lastPage': lastPage,
+    }
     return render(request, 'catalog.html', {'context': context})
 
-def product(request):
-    productInfo = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
+def product(request, id):
+    product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(id) + '/').json()
     WALink = "/"
     context = {
-        'product': productInfo,
+        'product': product,
         'WALink': WALink,
     }
     return render(request, 'product.html', {'context': context})

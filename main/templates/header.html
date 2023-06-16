@@ -68,6 +68,11 @@
       'name': 'Вход/Регистрация',
       'icon': '/static/images/user_icon.svg',
     },
+    'logout': {
+      'url': '/',
+      'name': 'Выход',
+      'icon': '/static/images/user_icon.svg',
+    },
     'cart': {
       'url': '/cart',
       'name': 'Корзина',
@@ -172,6 +177,16 @@
       </div>
     </a>
   </li>
+  {% if user.is_authenticated %}
+  <li class="UserMenu__listItem">
+    <a class="UserMenu__item" href="http://127.0.0.1:8000/api/v1/drf-auth/logout/">
+      <img class="UserMenu__icon" src="{{ scope.logout.icon }}" alt="{{ scope.logout.name }}">
+      <div class="UserMenu__text ">
+        {{ scope.logout.name }}
+      </div>
+    </a>
+  </li>
+  {% else %}
   <li class="UserMenu__listItem">
     <a class="UserMenu__item" data-bs-toggle="modal" data-bs-target="#loginModal">
       <img class="UserMenu__icon" src="{{ scope.login.icon }}" alt="{{ scope.login.name }}">
@@ -180,6 +195,7 @@
       </div>
     </a>
   </li>
+  {% endif %}
   <li class="UserMenu__listItem">
     <a class="UserMenu__item" href="{{ scope.cart.url }}">
       <img class="UserMenu__icon" src="{{ scope.cart.icon }}" alt="{{ scope.cart.name }}">

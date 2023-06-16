@@ -1,1 +1,4 @@
 secret_settings.py
+__pycache__
+/main/static/.webassets-cache
+/venv
