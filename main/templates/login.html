@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+<div class="Login">
+  <form id="loginFormPage" method="POST" action="api/v1/drf-auth/login/">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <div class="Modal" id="loginModal-phoneInput">
+      <button type="button" class="btn-close Modal__closeButton" onclick="switchToLogin()" data-bs-dismiss="modal" aria-label="Close">
+        <img
+          class="Modal__closeButtonImage"
+          src="{{ static('/images/close_icon.svg') }}"
+          alt="Закрыть"
+        >
+      </button>
+      <div class="Modal__header">
+        Вход
+      </div>
+
+      <label for="username">Имя пользоватля</label>
+      <input class="Modal__field" type="text" id="username" name="username">
+      <label for="username">Пароль</label>
+      <input class="Modal__field" type="text" id="password" name="password">
+      <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ВОЙТИ">
+      <div class="Modal__hint">
+        Новый пользователь? <a class="Modal__hintLink" onclick="switchToRegister()">Зарегистрироваться</a>
+      </div>            
+    </div>
+  </form>
+  <form id="registerFormPage" method="POST" action="api/v1/register/" hidden>
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <div class="Modal" id="loginModal-phoneInput">
+      <button type="button" class="btn-close Modal__closeButton" onclick="switchToLogin()" data-bs-dismiss="modal" aria-label="Close">
+        <img
+          class="Modal__closeButtonImage"
+          src="{{ static('/images/close_icon.svg') }}"
+          alt="Закрыть"
+        >
+      </button>
+      <div class="Modal__header">
+        Регистрация
+      </div>
+
+      <label for="username">Имя пользоватля</label>
+      <input class="Modal__field" type="text" id="username" name="username">
+      <label for="username">Имя</label>
+      <input class="Modal__field" type="text" id="first_name" name="first_name">
+      <label for="username">Фамилия</label>
+      <input class="Modal__field" type="text" id="last_name" name="last_name">
+      <label for="username">Email</label>
+      <input class="Modal__field" type="text" id="email" name="email">
+      <label for="username">Пароль</label>
+      <input class="Modal__field" type="text" id="password" name="password">
+      <label for="username">Потдвердите пароль</label>
+      <input class="Modal__field" type="text" id="password2" name="password2">
+      <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ">
+      <div class="Modal__hint">
+        Уже зарегистрированы? <a class="Modal__hintLink" onclick="switchToLogin()">Войти</a>
+      </div>            
+    </div>
+  </form>
+  <script>
+    function switchToRegister() {
+      document.getElementById("registerFormPage").hidden = false;
+      document.getElementById("loginFormPage").hidden = true;
+    }
+
+    function switchToLogin() {
+      document.getElementById("registerFormPage").hidden = true;
+      document.getElementById("loginFormPage").hidden = false;
+    }
+  </script>  
+</div>
+{% endblock %} 

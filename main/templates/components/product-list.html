@@ -10,17 +10,37 @@
   <ul class="Pagination">
     <!-- <li class="Pagination__item"><a class="Pagination__link" href="#">&laquo;</a></li> -->
     {% if context.leftArrow %}
-    <li class="Pagination__item"><a class="Pagination__link" href="/1">&laquo;</a></li>
+    <li class="Pagination__item">
+      <a class="Pagination__link" href="{{ context.parentRoute }}1">
+        &laquo;
+      </a>
+    </li>
     {% endif %}
     {% for i in range(context.leftPages) %}
-    <li class="Pagination__item"><a class="Pagination__link" href="/{{ context.currentPage - context.leftPages + i + 1 }}">{{ context.currentPage - context.leftPages + i }}</a></li>
+    <li class="Pagination__item">
+      <a class="Pagination__link" href="{{ context.parentRoute }}{{ context.currentPage - context.leftPages + i }}">
+        {{ context.currentPage - context.leftPages + i }}
+      </a>
+    </li>
     {% endfor %}
-    <li class="Pagination__item"><a class="Pagination__link Pagination__link--current">{{ context.currentPage }}</a></li>
+    <li class="Pagination__item">
+      <a class="Pagination__link Pagination__link--current">
+        {{ context.currentPage }}
+      </a>
+    </li>
     {% for i in range(context.rightPages) %}
-    <li class="Pagination__item"><a class="Pagination__link" href="/{{ context.currentPage + i + 1 }}">{{ context.currentPage + i + 1 }}</a></li>
+    <li class="Pagination__item">
+      <a class="Pagination__link" href="{{ context.parentRoute }}{{ context.currentPage + i + 1 }}">
+        {{ context.currentPage + i + 1 }}
+      </a>
+    </li>
     {% endfor %}
     {% if context.rightArrow %}
-    <li class="Pagination__item"><a class="Pagination__link" href="/{{ context.lastPage }}">&raquo;</a></li>
+    <li class="Pagination__item">
+      <a class="Pagination__link" href="{{ context.parentRoute }}{{ context.lastPage }}">
+        &raquo;
+      </a>
+    </li>
     {% endif %}
   </ul>
 </div>

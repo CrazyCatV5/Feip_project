@@ -2,27 +2,57 @@
 
 {% block main %}
 <div class="Cart">
+  <script>
+    basket = []
+    $.ajax({
+      url: "http://127.0.0.1:8000/api/v1/my_basket/",
+      type: 'GET',
+      dataType: 'json', // added data type
+      success: function(res) {
+        basket = res
+      }
+    });
+    products = []
+    for(var i=0; i<10; i++){
+      (function(index){
+        $.ajax({
+        url: "http://127.0.0.1:8000/api/v1/product/" + i + "/",
+        type: 'GET',
+        dataType: 'json', // added data type
+        success:function(res){
+          products.append(res)
+        }
+        });
+      })(i);
+    }
+  </script>
   <div class="Cart__header">
     <!-- Вернуться в каталог -->
     <h1 class="Cart__title">
       КОРЗИНА
     </h1>
   </div>
+  {% if context.products %}
   <div class="Cart__container">
     <ul class="Cart__itemList">
-      {% include 'components/cart-item.html' %}
-      <hr class="Cart__separator">
-      {% include 'components/cart-item.html' %}
-      <hr class="Cart__separator">
-      {% include 'components/cart-item.html' %}
-      <hr class="Cart__separator">
-      {% include 'components/cart-item.html' %}
+      {% for item in context.products %}
+        {% with product=item, 
+          product_info=context.basket[loop.index - 1], 
+          sizes=context.sizes, 
+          colors=context.colors %}
+          {% include 'components/cart-item.html' %}
+        {% endwith %}
+        {% if not loop.last %}
+          <hr class="Cart__separator">
+        {% endif %}
+      {% endfor %}
     </ul>
     <div class="Cart__total">
-      {% with mode='cart' %}
+      {% with mode='cart', context=context %}
         {% include 'components/cart-total.html' %}
       {% endwith %}
     </div>
   </div>
+  {% endif %}
 </div>
 {% endblock %} 

@@ -4,7 +4,7 @@ import math
 from django.contrib.auth.models import User
 from django.db.models import Exists, Count, Case, When
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.fields import IntegerField
@@ -34,11 +34,16 @@ def environment(**options):
     })
     return env
 
-# Create your views here.
+def getFormattedCost(cost):
+    cost_formatted = str(int(cost) % 1000) + " ₽"
+    k = 5
+    while(cost > 10**3):
+        cost_formatted = str(int(cost) // 1000 % 1000) + " " + cost_formatted.zfill(k)
+        cost = cost // 1000
+        k += 4
+    return cost_formatted
 
-
-def main(request, page):
-    productInfo = requests.get('http://127.0.0.1:8000/api/v1/product/?page=' + str(page)).json()
+def getPaginationInfo(productInfo, page):
     lastPage = math.ceil(productInfo.get('count') / 12)
     leftPages = min(page - 1, 3)
     rightPages = min(lastPage - page, 3)
@@ -48,6 +53,25 @@ def main(request, page):
         leftArrow = True
     if (lastPage - page > 3):
         rightArrow = True
+    return [lastPage, leftPages, rightPages, leftArrow, rightArrow]
+
+def getCategoryID(name):
+    categoryList = requests.get('http://127.0.0.1:8000/api/v1/category').json()
+    for item in categoryList:
+        if (item.get('category') == name):
+            return item.get('id')
+    return -1
+
+# Create your views here.
+
+def login(request, errors=""):
+    return render(request, 'login.html')
+
+def catalog(request, page):
+    productInfo = requests.get('http://127.0.0.1:8000/api/v1/product/?page=' + str(page)).json()
+    if ('count' not in productInfo):
+        return HttpResponseNotFound("Страницы не существует")
+    [lastPage, leftPages, rightPages, leftArrow, rightArrow] = getPaginationInfo(productInfo, page)
     context = {
         'products': productInfo,
         'currentPage': page,
@@ -56,11 +80,61 @@ def main(request, page):
         'leftArrow': leftArrow,
         'rightArrow': rightArrow,
         'lastPage': lastPage,
+        'parentRoute': '/',
     }
     return render(request, 'catalog.html', {'context': context})
 
+def category(request, categoryName, page=1):
+    categoryID = getCategoryID(categoryName)
+    productInfo = requests.get(
+        'http://127.0.0.1:8000/api/v1/product/?page=' + str(page)
+        + '&category=' + str(categoryID)
+        ).json()
+    if ('count' not in productInfo):
+        return HttpResponseNotFound("Страницы не существует")
+    [lastPage, leftPages, rightPages, leftArrow, rightArrow] = getPaginationInfo(productInfo, page)
+    context = {
+        'products': productInfo,
+        'currentPage': page,
+        'leftPages': leftPages,
+        'rightPages': rightPages,
+        'leftArrow': leftArrow,
+        'rightArrow': rightArrow,
+        'lastPage': lastPage,
+        'parentRoute': '/category/' + categoryName + '/',
+        'categoryName': categoryName,
+    }
+    return render(request, 'category.html', {'context': context})
+
+def search(request, page = 1, query = ''):
+    if (request.GET.get('search')):
+        query = request.GET.get('search')
+    if (request.GET.get('page')):
+        page = int(request.GET.get('page'))
+    queryString = '?search=' + query + '&page=' + str(page)
+    productInfo = requests.get(
+        'http://127.0.0.1:8000/api/v1/product/' + queryString
+        ).json()
+    if ('count' not in productInfo):
+        return HttpResponseNotFound("Страницы не существует")
+    [lastPage, leftPages, rightPages, leftArrow, rightArrow] = getPaginationInfo(productInfo, page)
+    context = {
+        'products': productInfo,
+        'currentPage': page,
+        'leftPages': leftPages,
+        'rightPages': rightPages,
+        'leftArrow': leftArrow,
+        'rightArrow': rightArrow,
+        'lastPage': lastPage,
+        'parentRoute': '/search/?search=' + query + '&page=',
+        'categoryName': 'Результаты по запросу: \"' + query + '\"',
+    }
+    return render(request, 'search.html', {'context': context})
+
 def product(request, id):
     product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(id) + '/').json()
+    if (not product.get('id')):
+        return HttpResponseNotFound("Страницы не существует")
     WALink = "/"
     context = {
         'product': product,
@@ -68,13 +142,69 @@ def product(request, id):
     }
     return render(request, 'product.html', {'context': context})
 
-def cart(request):
-    context = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
-    return render(request, 'cart.html', {'context': context})
-
 def checkout(request):
-    context = requests.get('http://127.0.0.1:8000/api/v1/product/').json()
+    user = None
+    if request.user.is_authenticated:
+        user = request.user.id
+    basket = requests.get('http://127.0.0.1:8000/api/v1/basket/').json()
+    sizes = requests.get('http://127.0.0.1:8000/api/v1/size/').json()
+    colors = requests.get('http://127.0.0.1:8000/api/v1/color/').json()
+    my_basket = []
+    products = []
+    count = 0
+    cost = 0
+    for item in basket:
+        if (item.get("user") == user):
+            my_basket.append(item)
+            product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(item.get('id')) + '/').json()
+            products.append(product)
+            count += 1
+            cost += product.get("cost")
+
+    cost_formatted = getFormattedCost(cost)
+    context = {
+        'basket': my_basket,
+        'products': products,
+        'sizes': sizes,
+        'colors': colors,
+        'total': {
+            'count': count,
+            'cost': cost_formatted,
+        }
+    }
     return render(request, 'checkout.html', {'context': context})
+
+def cart(request):
+    user = None
+    if request.user.is_authenticated:
+        user = request.user.id
+    basket = requests.get('http://127.0.0.1:8000/api/v1/basket/').json()
+    sizes = requests.get('http://127.0.0.1:8000/api/v1/size/').json()
+    colors = requests.get('http://127.0.0.1:8000/api/v1/color/').json()
+    my_basket = []
+    products = []
+    count = 0
+    cost = 0
+    for item in basket:
+        if (item.get("user") == user):
+            my_basket.append(item)
+            product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(item.get('id')) + '/').json()
+            products.append(product)
+            count += 1
+            cost += product.get("cost")
+
+    cost_formatted = getFormattedCost(cost)
+    context = {
+        'basket': my_basket,
+        'products': products,
+        'sizes': sizes,
+        'colors': colors,
+        'total': {
+            'count': count,
+            'cost': cost_formatted,
+        }
+    }
+    return render(request, 'cart.html', {'context': context})
 
 
 class ProductAPI(APIView):

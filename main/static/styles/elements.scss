@@ -20,6 +20,10 @@ a {
     }
 }
 
+.Login {
+    width: 420px;
+}
+
 .Form {
     font-family: 'PT Sans', sans-serif;
     width: 470px;
@@ -60,6 +64,8 @@ a {
     }
 
     &__select {
+        background-color: $color-white;
+        border: 1px solid $color-lightgray;
         width: 100%;
         margin-bottom: 31px;
     }
@@ -159,6 +165,8 @@ a {
     }
 
     &__select {
+        background-color: $color-white;
+        border: 1px solid $color-lightgray;
         width: 100%;
         margin-bottom: 24px;
     }

@@ -51,14 +51,14 @@
         {{ scope.cost_formatted }}
       </div>
     </a>
-    <button class="ProductCard__button Button" data-bs-toggle="modal" data-bs-target="#sizePickerModal">
+    <button class="ProductCard__button Button" data-bs-toggle="modal" data-bs-target="#sizePickerModal{{ scope.id }}">
       В КОРЗИНУ
     </button>
     
   </div>
 </div>
 {% from 'components/modals/size-picker-modal.html' import sizePickerModal %}
-{{ sizePickerModal(scope.size) }}
+{{ sizePickerModal(scope, user, csrf_token) }}
 {% endmacro %}
 
 {{ content(scope) }}

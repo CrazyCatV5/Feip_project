@@ -108,7 +108,14 @@
 
   &__display {
     height: auto;
-    width: 464px;
-    padding-left: 28px;
+    width: 600px;
+  }
+
+  &__displayImage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 612px;
+    padding: auto;
   }
 }

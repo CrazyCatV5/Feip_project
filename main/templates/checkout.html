@@ -8,27 +8,46 @@
       КОРЗИНА
     </h1>
   </div>
-  <form method="POST" action="{{ url_for('login') }}">
-    <!--  csrf_field()  -->
+  <form method="GET" action="api/v1/order/create_order/">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" id="comment" name="comment" value="тест">
+    {% if context.products %}
     <div class="Cart__container">
       <div class="Form Cart__form" id="checkout">
         <div class="Form__contactsGroup">
-          <div class="Form__column">
+          <!-- <div class="Form__column">
             <label class="Form__label" for="name">Имя</label>
             <input class="Form__field" type="text" id="name" name="name">
-          </div>
+          </div> -->
           <div class="Form__column">
             <label class="Form__label" for="email">E-mail</label>
             <input class="Form__field" type="text" id="email" name="email">
           </div>
         </div>
         <label class="Form__label" for="sizes">Способ получения</label>
-        <select class="form-select Form__select" name="sizes">
+        <select onchange="switchDelivery(event)" class="form-select Form__select" name="sizes">
           <option value="" selected disabled hidden></option>
-          <option value="Самовывоз" selected>Самовывоз</option>
+          <option value="Самовывоз">Самовывоз</option>
           <option value="Доставка">Доставка</option>
         </select>
-        <div class="Form__addressGroup">
+        <div class="Form__column" id="formAddressColumn" hidden>
+          <label class="Form__label" for="address">Адрес</label>
+          <input class="Form__field" type="text" id="address" name="address">
+        </div>
+        <script>
+          savedAdress = ""
+          function switchDelivery(event) {
+            if (event.target.value == "Самовывоз") {
+              savedAdress = document.getElementById("address").value;
+              document.getElementById("address").value = "";
+              document.getElementById("formAddressColumn").hidden = true;
+            } else {
+              document.getElementById("address").value = savedAdress;
+              document.getElementById("formAddressColumn").hidden = false;
+            }
+          }
+        </script>
+        <!-- <div class="Form__addressGroup">
           <div class="Form__row">
             <div class="Form__column">
               <label class="Form__label" for="city">Населённый пункт</label>
@@ -53,14 +72,15 @@
               <input class="Form__field" type="text" id="flat" name="flat">
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="Cart__total">
-        {% with mode='checkout' %}
+        {% with mode='checkout', context=context %}
           {% include 'components/cart-total.html' %}
         {% endwith %}
       </div>
     </div>
+    {% endif %}
   </form>
 </div>
 {% endblock %} 

@@ -83,36 +83,20 @@
     'icon': '/static/images/catalog_icon.svg',
     'catalogItems': [
       {
-        'url': '/catalog',
-        'name': 'Одежда',
+        'url': '/category/штаны',
+        'name': 'Штаны',
       },
       {
-        'url': '/catalog',
-        'name': 'Обувь',
+        'url': '/category/куртки',
+        'name': 'Куртки',
       },
       {
-        'url': '/catalog',
-        'name': 'Верхняя одежда',
+        'url': '/category/ботинки',
+        'name': 'Ботинки',
       },
       {
-        'url': '/catalog',
-        'name': 'Домашняя одежда',
-      },
-      {
-        'url': '/catalog',
-        'name': 'Купальники',
-      },
-      {
-        'url': '/catalog',
-        'name': 'Аксессуары',
-      },
-      {
-        'url': '/catalog',
-        'name': 'Идеи для подарков',
-      },
-      {
-        'url': '/catalog',
-        'name': 'Marina rinaldi',
+        'url': '/category/шляпы',
+        'name': 'Шляпы',
       },
     ],
   },
@@ -217,7 +201,7 @@
         КАТАЛОГ
       </div>
     </a>
-    <!-- <div class="dropdown-menu NavCatalog__dropdownArea" aria-labelledby="navbarDropdown">  
+    <div class="dropdown-menu NavCatalog__dropdownArea" aria-labelledby="navbarDropdown">  
       <ul class="NavCatalog__list">      
         {% for item in scope.catalogItems %}
           {% set item = {
@@ -231,14 +215,17 @@
           </li>
         {% endfor %}
         </ul>
-    </div> -->
+    </div>
   </div>
 </div>
 {% endmacro %} 
 
 {% macro searchBar(scope) %}
 <div class="SearchBar">
-  <input class="form-control me-2 SearchBar__input" type="search" placeholder="" aria-label="Search">
+  <form method="GET" action="/search/">
+    <input class="form-control me-2 SearchBar__input" type="search" name="search" placeholder="" aria-label="Search">
+    <input type="submit" hidden/>
+  </form>
 </div>
 {% endmacro %} 
 

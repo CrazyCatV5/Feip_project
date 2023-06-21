@@ -1,39 +1,28 @@
-{% set scope = {
-    'preview': '/static/images/image_placeholder_white.png',
-    'color': 'Белый',
-    'title': 'Жакет Weekend Max Mara ONDINA',
-    'multSizes': 'true',
-    'size': 'M',
-    'priceString': '6 000 ₽',
-} %}
-
 
 {% macro content(scope) %}
 <div class="CartItem">
   <div class="CartItem__imageBlock">
-    <img class="CartItem__image" src="{{ scope.preview }}" alt="{{ scope.title }}">
+    <img class="CartItem__image" src="{{ product.image_color[0].image }}" alt="{{ product.name }}">
   </div>
   <div class="CartItem__mainBlock">
     <div class="CartItem__title">
-      {{ scope.title }}
+      {{ product.name }}
     </div>
     <div class="CartItem__info">
-      {% if scope.multSizes %}
       <div class="CartItem__infoItem">
         <div class="CartItem__infoName">
           Размер:
         </div>
         <div class="CartItem__infoValue">
-          {{ scope.size }}
+          {{ sizes[product_info.size - 1].size }}
         </div>
       </div>
-      {% endif %}
       <div class="CartItem__infoItem">
         <div class="CartItem__infoName">
           Цвет:
         </div>
         <div class="CartItem__infoValue">
-          {{ scope.color }}
+          {{ colors[product_info.color - 1].name }}
         </div>
       </div>
     </div>
@@ -42,7 +31,7 @@
         Стоимость
       </div>
       <div class="CartItem__infoValue">
-        {{ scope.priceString }}
+        {{ product.cost_formatted }}
       </div>
     </div>
   </div>
@@ -54,8 +43,6 @@
     >
   </button>
 </div>
-{% from 'components/modals/size-picker-modal.html' import sizePickerModal %}
-{{ sizePickerModal(scope) }}
 {% endmacro %}
 
-{{ content(scope) }}
+{{ content(context) }}

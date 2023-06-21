@@ -1,0 +1,15 @@
+{% extends 'layouts/base.html' %}
+
+{% block main %}
+<div class="Catalog">
+  <div class="Catalog__header">
+    <h1 class="Catalog__title">
+      {{ context.categoryName }}
+    </h1>
+    <!-- фильтры и сортировки -->
+  </div>
+  {% with context=context %}
+    {% include 'components/product-list.html' %}
+  {% endwith %}
+</div>
+{% endblock %} 

@@ -1,56 +1,13 @@
 {% extends 'layouts/base.html' %}
 
-<!-- { % set scope = {
-  "product": {
-    "id": 1,
-    "name": "штаны0",
-    "article": "штаны0",
-    "cost": 5696.0,
-    "sale_cost": 5469.0,
-    "new": false,
-    "sale": false,
-    "description": "lHvCiO6hVN1t9pcXofF5FOtnZiHVgyyWUol9mT00uMRjuURQUP",
-    "image_color": [
-      {
-        "id": 1,
-        "img_name": "штаны0",
-        "color": {
-          "id": 1,
-          "name": "красный",
-          "color": 4278190080    
-        },
-        "image": "http://127.0.0.1:8000/media/products/seed/1.png",
-        "name": "изображение0",
-        "product": 1
-      }
-    ],
-    "size": [
-      {
-        "id": 2,
-        "size": 50
-      }
-    ],
-    "brand": {
-      "id": 4,
-      "name": "rYZHPzcVi3"
-    },
-    "category": {
-      "id": 1,
-      "category": "штаны"
-    },
-    "is_favorite": false
-  },
-  'WALink': '/',
-} % } -->
 {% set scope = context %}
 
 {% macro gallery(scope) %}
 <div class="Gallery">
-  <div class="Gallery__list">
-  </div>
-  {% set item = scope %}
   <div class="Gallery__display">
-    <img class="Gallery__displayImage" src="{ { item.image } }">
+    {% for item in scope %}
+      <img id="galleryImage{{loop.index}}" class="Gallery__displayImage" src="{{ item.image }}" {{ 'hidden' if loop.index > 1 }}>
+    {% endfor %}
   </div>
 </div>
 {% endmacro %}
@@ -60,73 +17,97 @@
   <div class="Product__gallery">
     {{ gallery(scope.product.image_color) }}
   </div>
-  <div class="Product__info">
-    <div class="Product__title">
-      {{ scope.product.name }}
-    </div>
-    <div class="Product__id">
-      <div class="Product__idSign">
-        Артикул: 
+  <form method="POST" action="http://127.0.0.1:8000/api/v1/basket/">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="id" value="">
+    <input type="hidden" name="count" value="1">
+    <input type="hidden" name="product" value="{{ scope.product.id }}">
+    <input type="hidden" name="user" value="{{ user.id }}">
+    <input type="hidden" id="color" name="color" value="{{ scope.product.image_color[0].color.id  }}">
+    <div class="Product__info">
+      <div class="Product__title">
+        {{ scope.product.name }}
       </div>
-      <div class="Product__idValue">
-        {{ scope.product.article }}
+      <div class="Product__id">
+        <div class="Product__idSign">
+          Артикул: 
+        </div>
+        <div class="Product__idValue">
+          {{ scope.product.article }}
+        </div>
       </div>
-    </div>
-    <div class="Product__section">
-      <div class="Product__text">
-        {% autoescape false %}
-          {{ scope.product.description }}
-        {% endautoescape %}
+      <div class="Product__section">
+        <div class="Product__text">
+          {% autoescape false %}
+            {{ scope.product.description }}
+          {% endautoescape %}
+        </div>
       </div>
-    </div>
-    <div class="Product__section">
-      <div class="Product__sectionTitle">
-        СОСТАВ:
-      </div>
-      <div class="Product__text">
-        {% autoescape false %}
-          {{ scope.product.brand.name }}
-        {% endautoescape %}
-      </div>
-    </div>
-    <div class="Product__section">
-      <div class="Product__sectionTitle">
-        РАЗМЕР:
-      </div>
-      <div class="Product__sizeMenu">
-        <div class="Product__sizePicker">
-          <select class="form-select" name="sizes">
-            <option value="" selected disabled hidden></option>
-            {% for item in scope.product.size %}
-              <option value="{{ item.name }}">{{ item.size }}</option>
-            {% endfor %}     
-          </select>
+      <div class="Product__section">
+        <div class="Product__sectionTitle">
+          СОСТАВ:
         </div>
         <div class="Product__text">
-          Не можете подобрать размер?<br>
-          <a href="{{ scope.WALink }}" class="Product__link">
-            Запишитесь на примерку в наш шоурум
-          </a>
+          {% autoescape false %}
+            {{ scope.product.brand.name }}
+          {% endautoescape %}
         </div>
       </div>
-    </div>
-    <div class="Product__section">
-      <div class="Product__sectionTitle">
-        ЦВЕТ:
+      <div class="Product__section">
+        <div class="Product__sectionTitle">
+          РАЗМЕР:
+        </div>
+        <div class="Product__sizeMenu">
+          <div class="Product__sizePicker">
+            <select class="form-select Modal__select" name="size">
+              {% for item in scope.product.size %}
+                <option value="{{ item.id }}">{{ item.size }}</option>
+              {% endfor %}     
+            </select>
+          </div>
+          <div class="Product__text">
+            Не можете подобрать размер?<br>
+            <a href="{{ scope.WALink }}" class="Product__link">
+              Запишитесь на примерку в наш шоурум
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="ColorMenu">
-        {% for item in scope.product.image_color %}
-          <a class="ColorMenu__item {{'ColorMenu__item--selected' if scope.product.id == item.id }}"
-           href="{{ item.url }}" style="background-color: {{ item.color.color }}"></a>
-        {% endfor %}     
+      <div class="Product__section">
+        <div class="Product__sectionTitle">
+          ЦВЕТ:
+        </div>
+        <div class="ColorMenu">
+          {% for item in scope.product.image_color %}
+            <a id="colorButton{{ loop.index }}" class="ColorMenu__item {{'ColorMenu__item--selected' if scope.product.id == item.id }}"
+            onclick="switchColor({{ loop.index }}, {{ item.color.id }})" style="background-color: 
+              {{ 'red' if item.color.name == 'красный' }}
+              {{ 'black' if item.color.name == 'черный' }}
+              {{ 'blue' if item.color.name == 'синий' }}
+              {{ 'yellow' if item.color.name == 'желтый' }}
+              {{ 'green' if item.color.name == 'зеленый' }};
+            "></a>
+          {% endfor %} 
+          <script>
+            function switchColor(newColor, id) {
+              document.getElementById("color").value = id;
+              for (let i = 1; i <= {{ scope.product.image_color|length }}; i++) {
+                document.getElementById("galleryImage" + i).hidden = true;
+                document.getElementById("colorButton" + i).classList.remove("ColorMenu__item--selected");
+              }
+              document.getElementById("galleryImage" + newColor).hidden = false;
+              document.getElementById("colorButton" + newColor).classList.add("ColorMenu__item--selected");
+            }
+          </script>     
+        </div>
+      </div>
+      <div class="Product__buyMenu">
+        <div class="Product__price">
+          {{ scope.product.cost_formatted }}
+        </div>
+        <input class="Button" type="submit" id="submit" name="submit" value="В КОРЗИНУ">
       </div>
     </div>
-    <div class="Product__buyMenu">
-      <div class="Product__price">
-        {{ scope.product.cost_formatted }}
-      </div>
-      <button type="button" class="Button">В КОРЗИНУ</button>
-    </div>
-  </div>
+  </form>
 </div>
 {% endblock %} 
