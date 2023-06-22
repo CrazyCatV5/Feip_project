@@ -26,7 +26,12 @@ a {
 
 .Form {
     font-family: 'PT Sans', sans-serif;
-    width: 470px;
+    max-width: 470px;
+  
+    @include vw-sm-down {
+        max-width: 600px;
+        width: 100%;
+    }
 
     &__header {
         font-size: 24px;

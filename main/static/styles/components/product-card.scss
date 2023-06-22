@@ -4,7 +4,6 @@
   display: flex;
   flex-flow: column;
   line-height: 121%;
-  // position: relative;
   overflow: visible;
 
   &__wrapper {
@@ -14,7 +13,6 @@
     width: 288px + 32px;
     height: 488px + 32px;
     padding: 16px;
-    // transform: translate(-16px, -16px);
     overflow: hidden;
     transition: 100ms ease-in-out;
     text-decoration: none;
@@ -24,6 +22,18 @@
       width: 288px + 32px;
       height: 488px + 72px + 32px;
       box-shadow: 0px 0px 20px -4px rgba(0, 0, 0, 0.2);
+
+      @include vw-sm-down {
+        background-color: rgba(0, 0, 0, 0);
+        height: 488px + 72px + 32px;
+        box-shadow: 0px 0px 20px -4px rgba(0, 0, 0, 0.2);
+        box-shadow: none;
+      }
+    }
+
+    @include vw-sm-down {
+      height: 488px + 72px + 32px;
+      transition: none;
     }
   }
 
@@ -40,6 +50,10 @@
     font-weight: 500;
     margin-bottom: 24px;
     text-decoration: underline;
+
+    @include vw-sm-down {
+      margin-bottom: 12px;
+    }
   }
 
   &__price {
@@ -48,6 +62,10 @@
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 32px;
+
+    @include vw-sm-down {
+      margin-bottom: 16px;
+    }
   }
 
   &__button {
@@ -55,6 +73,10 @@
     height: 40px;
     width: 100%;
     :hover > & {
+      display: block;
+    }
+
+    @include vw-sm-down {
       display: block;
     }
   }

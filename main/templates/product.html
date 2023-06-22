@@ -17,14 +17,14 @@
   <div class="Product__gallery">
     {{ gallery(scope.product.image_color) }}
   </div>
-  <form method="POST" action="http://127.0.0.1:8000/api/v1/basket/">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-    <input type="hidden" name="id" value="">
-    <input type="hidden" name="count" value="1">
-    <input type="hidden" name="product" value="{{ scope.product.id }}">
-    <input type="hidden" name="user" value="{{ user.id }}">
-    <input type="hidden" id="color" name="color" value="{{ scope.product.image_color[0].color.id  }}">
-    <div class="Product__info">
+  <div class="Product__info">
+    <form method="POST" action="http://127.0.0.1:8000/api/v1/basket/">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+      <input type="hidden" name="id" value="">
+      <input type="hidden" name="count" value="1">
+      <input type="hidden" name="product" value="{{ scope.product.id }}">
+      <input type="hidden" name="user" value="{{ user.id }}">
+      <input type="hidden" id="color" name="color" value="{{ scope.product.image_color[0].color.id  }}">
       <div class="Product__title">
         {{ scope.product.name }}
       </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="Product__sizeMenu">
           <div class="Product__sizePicker">
-            <select class="form-select Modal__select" name="size">
+            <select class="form-select Modal__select Product__select" name="size">
               {% for item in scope.product.size %}
                 <option value="{{ item.id }}">{{ item.size }}</option>
               {% endfor %}     
@@ -107,7 +107,7 @@
         </div>
         <input class="Button" type="submit" id="submit" name="submit" value="В КОРЗИНУ">
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 {% endblock %} 

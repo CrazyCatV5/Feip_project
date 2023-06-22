@@ -2,30 +2,6 @@
 
 {% block main %}
 <div class="Cart">
-  <script>
-    basket = []
-    $.ajax({
-      url: "http://127.0.0.1:8000/api/v1/my_basket/",
-      type: 'GET',
-      dataType: 'json', // added data type
-      success: function(res) {
-        basket = res
-      }
-    });
-    products = []
-    for(var i=0; i<10; i++){
-      (function(index){
-        $.ajax({
-        url: "http://127.0.0.1:8000/api/v1/product/" + i + "/",
-        type: 'GET',
-        dataType: 'json', // added data type
-        success:function(res){
-          products.append(res)
-        }
-        });
-      })(i);
-    }
-  </script>
   <div class="Cart__header">
     <!-- Вернуться в каталог -->
     <h1 class="Cart__title">

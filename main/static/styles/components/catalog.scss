@@ -8,6 +8,14 @@
     display: flex;
     border-bottom: 1px solid $color-lightgray;
     padding: 32px 0px;
+
+    @include vw-lg-down {
+      padding: 26px 0px;
+    }
+
+    @include vw-sm-down {
+      padding: 12px 0px;
+    }
   }
 
   &__title {

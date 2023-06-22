@@ -1,28 +1,68 @@
 .Product {
   font-family: 'PT Sans', sans-serif;
-  display: flex;
-  flex-flow: row;
+  display: grid;
+  grid-auto-columns: 450px 1fr;
+
+  @include vw-lg-down {
+    grid-auto-columns: 280px 1fr;
+  }
+
+  @include vw-sm-down {
+    width: 100%;
+    grid-auto-columns: 150px 1fr;
+  }
+
+  &__gallery {
+    grid-column: 1;
+  }
 
   &__info {
+    grid-column: 2;
     padding: 0px 45px;
+    width: 100%;
+
+    @include vw-lg-down {
+      max-width: 400px;
+      padding: 0px;
+      padding-left: 24px;
+    }
+
+    @include vw-sm-down {
+      max-width: 400px;
+      width: 100%;
+      padding: 0px;
+      padding-left: 12px;
+    }
   }
 
   &__title {
     font-size: 24px;
     font-weight: 700;
     color: $color-darkergray;
+  
+    @include vw-sm-down {
+      font-size: 18px;
+    }
   }
 
   &__id {
     display: flex;
     flex-flow: row;
     padding-top: 8px;
+  
+    @include vw-sm-down {
+      padding-top: 4px;
+    }
   }
 
   &__idSign {
     font-size: 14px;
     font-weight: 500;
     color: $color-sign-gray;
+  
+    @include vw-sm-down {
+      font-size: 11px;
+    }
   }
 
   &__idValue {
@@ -30,10 +70,19 @@
     font-weight: 400;
     color: $color-darkgray;
     padding-left: 8px;
+  
+    @include vw-sm-down {
+      padding-left: 6px;
+      font-size: 11px;
+    }
   }
 
   &__section {
     padding-top: 24px;
+  
+    @include vw-sm-down {
+      padding-top: 12px;
+    }
   }
 
   &__sectionTitle {
@@ -41,12 +90,21 @@
     font-weight: 700;
     color: $color-darkergray;
     padding-bottom: 8px;
+  
+    @include vw-sm-down {
+      font-size: 14px;
+      padding-bottom: 4px;
+    }
   }
 
   &__text {
     font-size: 16px;
     font-weight: 400;
     color: $color-darkgray;
+  
+    @include vw-sm-down {
+      font-size: 14px;
+    }
   }
 
   &__link {
@@ -58,6 +116,16 @@
     flex-flow: row;
     align-items: center;
     gap: 27px;
+
+    @include vw-lg-down {
+      flex-flow: column;
+      align-items: start;
+      gap: 8px;
+    }
+  }
+
+  &__select {
+    margin: 0px;
   }
 
   &__buyMenu {
@@ -66,12 +134,21 @@
     flex-flow: row;
     align-items: center;
     gap: 32px;
+
+    @include vw-sm-down {
+      padding-top: 28px;
+      gap: 16px;
+    }
   }
 
   &__price {
     font-size: 24px;
     font-weight: 700;
     color: $color-darkergray;
+
+    @include vw-sm-down {
+      font-size: 18px;
+    }
   }
 }
 
@@ -108,7 +185,6 @@
 
   &__display {
     height: auto;
-    width: 600px;
   }
 
   &__displayImage {
@@ -117,5 +193,15 @@
     margin-right: auto;
     height: 612px;
     padding: auto;
+
+    @include vw-lg-down {
+      height: auto;
+      width: 280px;
+    }
+
+    @include vw-sm-down {
+      height: auto;
+      width: 150px;
+    }
   }
 }

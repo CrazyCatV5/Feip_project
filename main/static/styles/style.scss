@@ -34,12 +34,12 @@ $font-weight-bold: 700;
 }
 
 @mixin vw-sm-up {
-  @media (min-width: 781px) {
+  @media (min-width: 750px) {
       @content;
   }
 }
 @mixin vw-sm-down {
-  @media (max-width: 780px) {
+  @media (max-width: 750px) {
       @content;
   }
 }
@@ -51,6 +51,17 @@ $font-weight-bold: 700;
 }
 @mixin vw-lg-down {
   @media (max-width: 1264px) {
+      @content;
+  }
+}
+
+@mixin vw-grid2-down {
+  @media (max-width: 650px) {
+      @content;
+  }
+}
+@mixin vw-grid3-down {
+  @media (max-width: 1100px) {
       @content;
   }
 }

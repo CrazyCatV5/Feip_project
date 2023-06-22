@@ -31,6 +31,14 @@ body {
 .ContentContainer {
   padding: 32px 96px;
   background-color: $color-white;
+
+  @include vw-lg-down {
+    padding: 32px 42px;
+  }
+
+  @include vw-sm-down {
+    padding: 12px 12px;
+  }
 }
 
 .CenteredBlock {

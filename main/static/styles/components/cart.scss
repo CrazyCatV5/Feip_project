@@ -1,8 +1,8 @@
 .Cart {
   font-family: 'PT Sans', sans-serif;
-  display: flex;
-  flex-flow: column;
   width: 1248px;
+  display: flex;
+  flex-direction: column;
 
   &__header {
     display: flex;
@@ -18,22 +18,54 @@
 
   &__container {
     background-color: $color-lightergray;
-    display: flex;
-    flex-direction: row;
     justify-content: center; 
+    display: grid;
+    grid-auto-columns: 593px 207px;
+    grid-gap: 98px;
+    padding: 0px 24px;
+  
+    @include vw-lg-down {
+      grid-auto-columns: 1fr 207px;
+      grid-gap: 50px;
+    }
+  
+    @include vw-sm-down {
+      grid-auto-columns: 1fr;
+      grid-auto-rows: auto auto;
+      grid-gap: 16px;
+      width: 100%;
+    }
   }
 
   &__itemList {
+    grid-column: 1;
     display: flex;
     flex-direction: column;
-    margin-right: 98px;
     margin-bottom: 0px;
     width: 593px;
     padding: 0px;
+  
+    @include vw-lg-down {
+      width: auto;
+    }
+  
+    @include vw-sm-down {
+      grid-row: 1;
+    }
   }
 
   &__total {
+    grid-column: 2;
     width: 207px;
+  
+    @include vw-sm-down {
+      grid-column: 1;
+      grid-row: 2;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__separator {
@@ -43,7 +75,11 @@
   }
 
   &__form {
-    margin: 40px 48px 80px 0px;
+    margin: 40px 0px 80px 0px;
+  
+    @include vw-sm-down {
+      margin-bottom: 0px;
+    }
   }
 }
 
@@ -52,20 +88,56 @@
   flex-direction: row;
   width: 593px;
   margin: 40px 0px;
+  
+  @include vw-lg-down {
+    width: auto;
+  }
+
+  @include vw-sm-down {
+    margin: 20px 0px;
+  }
 
   &__imageBlock {
     margin-right: 32px;
+    display: flex;
+    align-items: center;
+  
+    @include vw-lg-down {
+      margin-right: 28px;
+    }
+  
+    @include vw-sm-down {
+      margin-right: 16px;
+    }
   }
 
   &__image {
+    display: block;
     width: 145px;
     height: 145px;
     object-fit: cover;
+  
+    @include vw-lg-down {
+      width: 125px;
+      height: 125px;
+    }
+  
+    @include vw-sm-down {
+      width: 100px;
+      height: 100px;
+    }
   }
 
   &__mainBlock {
     width: 400px;
     padding: 10px 0px;
+  
+    @include vw-lg-down {
+      width: 100%;
+    }
+  
+    @include vw-sm-down {
+    }
   }
 
   &__closeButton {
@@ -96,6 +168,10 @@
     flex-direction: row;
     margin: 0px;
     margin-bottom: 24px;
+  
+    @include vw-sm-down {
+      margin-bottom: 12px;
+    }
   }
 
   &__infoItem {
@@ -130,6 +206,10 @@
     flex-direction: column;
     gap: 12px;
     margin: 0px;
+  
+    @include vw-sm-down {
+      gap: 6px;
+    }
   }
 }
 
@@ -137,6 +217,11 @@
   display: flex;
   flex-direction: column;
   margin-top: 32px;
+  
+  @include vw-sm-down {
+    margin-top: 0px;
+    width: 207px;
+  }
 
   &__info {
     background-color: white;

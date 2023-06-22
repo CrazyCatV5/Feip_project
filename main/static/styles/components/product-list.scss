@@ -9,8 +9,15 @@
     justify-content: center;
     grid-template-columns: repeat(3, 288px + 32px);
     gap: 40px 0px;
-    // gap: 72px 32px;
     margin-top: 47px;
+
+    @include vw-grid3-down {
+      grid-template-columns: repeat(2, 288px + 32px);
+    }
+
+    @include vw-grid2-down {
+      grid-template-columns: repeat(1, 288px + 32px);
+    }
   }
 }
 
