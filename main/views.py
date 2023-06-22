@@ -132,11 +132,23 @@ def search(request, page = 1, query = ''):
     return render(request, 'search.html', {'context': context})
 
 def product(request, id):
+    user = None
+    if request.user.is_authenticated:
+        user = request.user.id
     product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(id) + '/').json()
+    basket = requests.get('http://127.0.0.1:8000/api/v1/basket/').json()
+    my_basket = []
+    products = []
+    count = 0
+    cost = 0
+    for item in basket:
+        if (item.get("user") == user and item.get("product") == product.get("id")):
+            my_basket.append(item)
     if (not product.get('id')):
         return HttpResponseNotFound("Страницы не существует")
     WALink = "/"
     context = {
+        'basket': my_basket,
         'product': product,
         'WALink': WALink,
     }
@@ -156,7 +168,7 @@ def checkout(request):
     for item in basket:
         if (item.get("user") == user):
             my_basket.append(item)
-            product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(item.get('id')) + '/').json()
+            product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(item.get('product')) + '/').json()
             products.append(product)
             count += 1
             cost += product.get("cost")
@@ -188,7 +200,7 @@ def cart(request):
     for item in basket:
         if (item.get("user") == user):
             my_basket.append(item)
-            product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(item.get('id')) + '/').json()
+            product = requests.get('http://127.0.0.1:8000/api/v1/product/' + str(item.get('product')) + '/').json()
             products.append(product)
             count += 1
             cost += product.get("cost")
@@ -238,6 +250,12 @@ class ProductViewSet(viewsets.ModelViewSet):
         basket = Basket.objects.filter(user=user, product=request.GET['product'])
         if basket.first() == None:
             return Response(False)
+        print(int(request.GET['size']))
+        print(basket[0].size.id)
+        print(int(request.GET['product']))
+        print(basket[0].product.id)
+        print(int(request.GET['color']))
+        print(basket[0].color.id)
         if basket[0].size.id == int(request.GET['size']) and basket[0].product.id == int(request.GET['product']) and basket[0].color.id == int(request.GET['color']):
             return Response(True)
         return Response(False)
@@ -310,6 +328,12 @@ class FavoriteProductViewSet(viewsets.ModelViewSet):
 class BasketViewSet(viewsets.ModelViewSet):
     queryset = Basket.objects.all()
     serializer_class = BasketSerializer
+
+    # def create(self, request, *args, **kwargs):
+    #     response = super(BasketViewSet, self).create(request, *args, **kwargs)
+    #     # here may be placed additional operations for
+    #     # extracting id of the object and using reverse()
+    #     return HttpResponseRedirect(self.request.path_info)
 
 
 class MyBasketViewSet(viewsets.ModelViewSet):

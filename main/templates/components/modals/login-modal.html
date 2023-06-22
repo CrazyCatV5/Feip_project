@@ -3,7 +3,7 @@
   <div class="modal" id="loginModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <form id="loginForm" method="POST" action="api/v1/drf-auth/login/">
+        <form id="loginForm" method="POST" action="http://127.0.0.1:8000/api/v1/drf-auth/login/">
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
           <div class="Modal" id="loginModal-phoneInput">
             <button type="button" class="btn-close Modal__closeButton" onclick="switchToLogin()" data-bs-dismiss="modal" aria-label="Close">
@@ -20,7 +20,7 @@
             <label for="usernamelgn">Имя пользоватля</label>
             <input class="Modal__field" type="text" id="username" name="username">
             <label for="passwordlgn">Пароль</label>
-            <input class="Modal__field" type="text" id="password" name="password">
+            <input class="Modal__field" type="password" id="password" name="password">
             <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ВОЙТИ">
             <div class="Modal__hint">
               Новый пользователь? <a class="Modal__hintLink" onclick="switchToRegister()">Зарегистрироваться</a>
@@ -38,7 +38,7 @@
             document.getElementById("loginForm").hidden = false;
           }
         </script>  
-        <form id="registerForm" method="POST" action="api/v1/register/" hidden>
+        <form id="registerForm" method="POST" action="http://127.0.0.1:8000/api/v1/register/" hidden>
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
           <div class="Modal" id="loginModal-phoneInput">
             <button type="button" class="btn-close Modal__closeButton" onclick="switchToLogin()" data-bs-dismiss="modal" aria-label="Close">
@@ -61,9 +61,9 @@
             <label for="email">Email</label>
             <input class="Modal__field" type="text" id="email" name="email">
             <label for="password">Пароль</label>
-            <input class="Modal__field" type="text" id="password" name="password">
+            <input class="Modal__field" type="password" id="password" name="password">
             <label for="password2">Потдвердите пароль</label>
-            <input class="Modal__field" type="text" id="password2" name="password2">
+            <input class="Modal__field" type="password" id="password2" name="password2">
             <input class="Button Button--primary Modal__button" type="submit" id="submit" name="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ">
             <div class="Modal__hint">
               Уже зарегистрированы? <a class="Modal__hintLink" onclick="switchToLogin()">Войти</a>

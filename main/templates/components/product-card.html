@@ -2,7 +2,7 @@
 {% macro content(scope) %}
 <div class="ProductCard">
   <div class="ProductCard__wrapper">
-    <a class="ProductCard__link" href="/product/{{ scope.id }}">
+    <a class="ProductCard__link" href="http://127.0.0.1:8000/product/{{ scope.id }}">
       {% set image = scope.image_color[0] %}
       <img class="ProductCard__image" src="{{ image.image }}" alt="{{ image.name }}" width="288">
       <div class="ProductCard__title">
@@ -12,14 +12,22 @@
         {{ scope.cost_formatted }}
       </div>
     </a>
-    <button class="ProductCard__button Button" data-bs-toggle="modal" data-bs-target="#sizePickerModal{{ scope.id }}">
+    {% if user.is_authenticated %}
+      <button class="ProductCard__button Button" 
+      data-bs-toggle="modal" data-bs-target="#sizePickerModal{{ scope.id }}">
+    {% else %}
+      <button class="ProductCard__button Button" 
+      data-bs-toggle="modal" data-bs-target="#loginModal">
+    {% endif %}
       В КОРЗИНУ
     </button>
     
   </div>
 </div>
-{% from 'components/modals/size-picker-modal.html' import sizePickerModal %}
-{{ sizePickerModal(scope, user, csrf_token) }}
+{% if user.is_authenticated %}
+  {% from 'components/modals/size-picker-modal.html' import sizePickerModal %}
+  {{ sizePickerModal(scope, user, csrf_token) }}
+{% endif %}
 {% endmacro %}
 
 {{ content(scope) }}

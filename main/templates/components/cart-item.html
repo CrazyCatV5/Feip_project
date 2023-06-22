@@ -42,6 +42,19 @@
       alt="Закрыть"
     >
   </button>
+  <!-- <script>
+    function deleteItem() {
+      $.ajax({
+        url: '/api/v1/basket/{{ product_info.id }}/',
+        type: 'DELETE',
+        data: {
+        csrfmiddlewaretoken: '{{ csrf_token }}'},
+        success: function(result) {
+          location.reload()
+        }
+      });
+    }
+  </script> -->
 </div>
 {% endmacro %}
 

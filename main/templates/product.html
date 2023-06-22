@@ -18,7 +18,9 @@
     {{ gallery(scope.product.image_color) }}
   </div>
   <div class="Product__info">
-    <form method="POST" action="http://127.0.0.1:8000/api/v1/basket/">
+    {% if user.is_authenticated %}
+      <form id="form" method="POST" action="http://127.0.0.1:8000/api/v1/basket/">
+    {% endif %}
       <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
       <input type="hidden" name="id" value="">
       <input type="hidden" name="count" value="1">
@@ -89,7 +91,14 @@
             "></a>
           {% endfor %} 
           <script>
+            // sizes = {{ scope.product.size | tojson }}
+            // colors = {{ scope.product.image_color | tojson }}
+            // items = {{ scope.basket | tojson }}
+            // n = Object.keys(items).length;
+            // size = 1
+            // color = 1
             function switchColor(newColor, id) {
+              // color = i
               document.getElementById("color").value = id;
               for (let i = 1; i <= {{ scope.product.image_color|length }}; i++) {
                 document.getElementById("galleryImage" + i).hidden = true;
@@ -98,6 +107,19 @@
               document.getElementById("galleryImage" + newColor).hidden = false;
               document.getElementById("colorButton" + newColor).classList.add("ColorMenu__item--selected");
             }
+
+            // function checkProduct(size, color) {
+            //   for (let i = 0; i < n; i++) {
+            //     if (size == {{ scope.product.id }} && sizes[size - 1]["id"] == items[i]["size"] && colors[color - 1]["color"]["id"] == items[i]["color"]) {
+            //       document.getElementById("form").method = "PATCH";
+            //       document.getElementById("form").action = "http://127.0.0.1:8000/api/v1/basket/{{ scope.product.id }}";
+            //     } else {
+            //       document.getElementById("form").method = "POST";
+            //       document.getElementById("form").action = "http://127.0.0.1:8000/api/v1/basket/";
+            //     }
+            //   }
+            // }
+            // checkProduct(size, color)
           </script>     
         </div>
       </div>
@@ -105,9 +127,17 @@
         <div class="Product__price">
           {{ scope.product.cost_formatted }}
         </div>
-        <input class="Button" type="submit" id="submit" name="submit" value="В КОРЗИНУ">
+        {% if user.is_authenticated %}
+        <input class="Button" type="submit" id="submitButton" name="submit" value="В КОРЗИНУ">
+        {% else %}
+          <button class="Button" data-bs-toggle="modal" data-bs-target="#loginModal">
+            В КОРЗИНУ
+          </button>
+        {% endif %}
       </div>
+    {% if user.is_authenticated %}
     </form>
+    {% endif %}
   </div>
 </div>
 {% endblock %} 
